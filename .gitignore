@@ -1,5 +1,6 @@
 # Me
 .DS_Store
+*.sqlite
 
 # Logs
 logs
