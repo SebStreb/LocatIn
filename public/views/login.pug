@@ -1,0 +1,15 @@
+extends ./layout.pug
+
+block content
+	h1 Login
+	form(method="post", action="/login")
+		p
+			label Username
+		p
+			input(type="username", name="username", placeholder="username")
+		p
+			label Password
+		p
+			input(type="password", name="password", placeholder="password")
+		p
+			input(type="submit", value="Login")

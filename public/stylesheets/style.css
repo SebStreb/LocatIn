@@ -1,0 +1,95 @@
+h1 {
+	text-align: center;
+	font-family: "Lucida Grande", sans-serif;
+	margin: 1% 10%;
+	color: #B5BBBD
+}
+
+h2 {
+	text-align: center;
+	font-family: "Lucida Grande", sans-serif;
+	margin: 1% 10% 5%;
+	color: #B5BBBD
+}
+
+h3 {
+	text-align: center;
+	font-family: "Lucida Grande", sans-serif;
+	margin: 5% 10% 1%;
+	color: #B5BBBD;
+}
+
+h4 {
+	text-align: center;
+	font-family: "Lucida Grande", sans-serif;
+	margin: 1% 10%;
+	color: #B5BBBD;
+}
+
+p {
+	text-align: center;
+	font-family: "Lucida Grande", sans-serif;
+	color: #B5BBBD
+}
+
+a {
+	font-family: "Lucida Grande", sans-serif;
+	color: #B5BBBD
+}
+
+body {
+	background-color: #21292B;
+	margin: 10%;
+}
+
+table {
+	width: 100%;
+	margin: 5% 0% 5%;
+	border-collapse: collapse;
+}
+
+th, td {
+	color: #B5BBBD;
+	padding: 5px;
+	text-align: center;
+	font-family: "Lucida Grande", sans-serif;
+	border-bottom: 1px solid #B5BBBD;
+}
+
+pre {
+	margin: -2% 10% -1%;
+}
+
+code {
+	text-align: center;
+	color: #B5BBBD;
+}
+
+form {
+	margin: 5% 0%;
+}
+
+textarea {
+	width: 80%;
+	padding: 1%;
+}
+
+input[type=text], select {
+	width: 20%;
+	padding: 1%;
+}
+
+input[type=submit] {
+	width: 10%;
+	text-align: center;
+}
+
+.img {
+	border-style: inset;
+	padding: 2%;
+	background-color: #4B5659;
+}
+
+.dev {
+	float: right;
+}
