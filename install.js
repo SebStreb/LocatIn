@@ -1,12 +1,14 @@
-var sqlite3 = require('sqlite3').verbose();
-console.log('\n\n\n');
-var db = new sqlite3.Database('bdd.sqlite');
 var user = require('./database/user.js');
+var option = require('./database/option.js');
 
-db.serialize(function() {
-	user.destroy();
-	user.create();
-	user.insert({$username: 'SebStreb', $password: 'Yolo1234'});
-});
+user.destroy();
+option.destroy();
+console.log('Tables destroyed');
 
-db.close();
+user.create();
+option.create();
+console.log('Tables recreated');
+
+user.insert({$username: 'SebStreb', $password: 'Yolo1234'});
+option.insert({$code: '01', $libelle: 'Break - 5 portes'});
+console.log('Values inserted');

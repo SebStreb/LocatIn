@@ -14,18 +14,18 @@ module.exports = function() {
 	});
 
 	passport.use(new LocalStrategy({
-		usernameField: 'username',
-		passwordField: 'password'
-	},
-	function(username, password, done) {
-		user.find({$username: username}, function(err, user) {
-			if (err) return done(err);
-			if (!user)
-				return done(null, false, { message: 'Invalid Username' });
-			if (!user.validPassword(password))
-				return done(null, false, { message: 'Invalid Password' });
-			return done(null, user);
-	    });
-	}
+			usernameField: 'username',
+			passwordField: 'password'
+		},
+		function(username, password, done) {
+			user.findPassport({$username: username}, function(err, user) {
+				if (err) return done(err);
+				if (!user)
+					return done(null, false, { message: 'Invalid Username' });
+				if (!user.validPassword(password))
+					return done(null, false, { message: 'Invalid Password' });
+				return done(null, user);
+			});
+		}
 	));
 };
