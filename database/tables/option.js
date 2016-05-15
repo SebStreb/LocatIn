@@ -1,20 +1,26 @@
 var sqlite3 = require('sqlite3').verbose();
-console.log('\n\n\n');
+console.log('\n');
 var db = new sqlite3.Database('bdd.sqlite');
 
 exports.create = function () {
-	var sql = "CREATE TABLE IF NOT EXISTS Option(" +
-		"code TEXT PRIMARY KEY NOT NULL," +
-		"libelle TEXT NOT NULL)";
-	db.run(sql, function(err) {
-		if (err) console.log(err);
+	var sql =
+		"CREATE TABLE IF NOT EXISTS Option(" +
+			"code TEXT PRIMARY KEY NOT NULL," +
+			"libelle TEXT NOT NULL" +
+		")";
+	db.serialize(function () {
+		db.run(sql, function(err) {
+			if (err) console.log(err);
+		});
 	});
 };
 
 exports.insert = function (option) {
 	var sql = "INSERT OR IGNORE INTO Option(code, libelle) VALUES($code, $libelle)";
-	db.run(sql, option, function(err) {
-		if (err) console.log(err);
+	db.serialize(function () {
+		db.run(sql, option, function(err) {
+			if (err) console.log(err);
+		});
 	});
 };
 
@@ -46,7 +52,9 @@ exports.findAll = function (option, callback) {
 
 exports.destroy = function () {
 	var sql = "DROP TABLE IF EXISTS Option";
-	db.run(sql, function(err) {
-		if (err) console.log(err);
+	db.serialize(function () {
+		db.run(sql, function(err) {
+			if (err) console.log(err);
+		});
 	});
 };

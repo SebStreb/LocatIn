@@ -1,6 +1,6 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var user = require('./database/user.js');
+var user = require('./database/tables/user.js');
 
 module.exports = function() {
 	passport.serializeUser(function(user, done) {
@@ -8,7 +8,7 @@ module.exports = function() {
 	});
 
 	passport.deserializeUser(function(id, done) {
-		user.find({$id: id}, function(err, user) {
+		user.findPassport({$id: id}, function(err, user) {
 			done(err, user);
 		});
 	});
