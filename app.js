@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var morgan = require('morgan');
 var passport = require('passport');
@@ -40,5 +42,5 @@ app.use(function(error, req, res, next) {
 	res.render('500', {title: '500', error: error});
 });
 
-console.log('Server listening on port 3000');
+console.log('\n\n\nServer listening on port 3000');
 app.listen(3000);

@@ -1,6 +1,8 @@
+'use strict';
+
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var user = require('./database/tables/user.js');
+var user = require('./database/user.js');
 
 module.exports = function() {
 	passport.serializeUser(function(user, done) {
@@ -8,7 +10,7 @@ module.exports = function() {
 	});
 
 	passport.deserializeUser(function(id, done) {
-		user.findPassport({$id: id}, function(err, user) {
+		user.findPassport({id: id}, function (err, user) {
 			done(err, user);
 		});
 	});
@@ -18,12 +20,11 @@ module.exports = function() {
 			passwordField: 'password'
 		},
 		function(username, password, done) {
-			user.findPassport({$username: username}, function(err, user) {
+			user.findPassport({username: username}, function (err, user) {
 				if (err) return done(err);
-				if (!user)
-					return done(null, false, { message: 'Invalid Username' });
+				if (!user) return done(null, false, {message: 'User not found'});
 				if (!user.validPassword(password))
-					return done(null, false, { message: 'Invalid Password' });
+					return done(null, false, {message: 'Invalid Password'});
 				return done(null, user);
 			});
 		}
