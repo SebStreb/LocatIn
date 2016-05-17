@@ -1,2 +1,2 @@
 # LocatIn
-Information System website using Node.js and SQLite
+Information System website using Node.js and MySQL

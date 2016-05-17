@@ -10,7 +10,7 @@ var auth = require('./auth.js');
 var index = require('./routes/index.js');
 
 var app = express();
-app.set('views', './public/views')
+app.set('views', './public/views');
 app.set('view engine', 'pug');
 
 app.use(morgan('dev'));
@@ -20,7 +20,7 @@ app.use(session({
   secret: 'test',
   resave: false,
   saveUninitialized: true
-}))
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -42,5 +42,5 @@ app.use(function(error, req, res, next) {
 	res.render('500', {title: '500', error: error});
 });
 
-console.log('\n\n\nServer listening on port 3000');
+console.log('Server listening on port 3000');
 app.listen(3000);

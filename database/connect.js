@@ -7,7 +7,7 @@ var pool  = mysql.createPool({
 	user     : 'website',
 	password : 'connect',
 	database : 'LocatIn',
-	connectionLimit: 1
+	connectionLimit : 1,
 });
 
 var launch = function(callback) {

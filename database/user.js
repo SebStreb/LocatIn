@@ -5,10 +5,10 @@ var mysql = require('./connect.js');
 exports.create = function () {
 	mysql(function (connection) {
 		var sql =
-		"CREATE TABLE IF NOT EXISTS User(" +
-			"id INT PRIMARY KEY AUTO_INCREMENT NOT NULL," +
-			"username VARCHAR(20) UNIQUE NOT NULL," +
-			"password VARCHAR(20) NOT NULL" +
+		"CREATE TABLE IF NOT EXISTS User(\n" +
+			"id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,\n" +
+			"username VARCHAR(20) UNIQUE NOT NULL,\n" +
+			"password VARCHAR(20) NOT NULL\n" +
 		")";
 		connection.query(sql, function (err) {
 			if (err) console.error('CREATE USER : ' + err.code);
@@ -19,9 +19,11 @@ exports.create = function () {
 exports.insert = function (user) {
 	mysql(function (connection) {
 		var sql =
-		"INSERT IGNORE INTO User(username, password) VALUES(:username, :password)";
-		connection.query(sql, user, function (err) {
+		"INSERT IGNORE INTO User(username, password) \n" +
+		"VALUES(:username, :password)";
+		connection.query(sql, user, function (err, result) {
 			if (err) console.error('INSERT USER : ' + err.code);
+			console.log('INSERTED ID ' + result.insertId + ' IN USER');
 		});
 	});
 };

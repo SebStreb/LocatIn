@@ -2,6 +2,7 @@
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var mysql = require('node-mysql-helper');
 var user = require('./database/user.js');
 
 module.exports = function() {
