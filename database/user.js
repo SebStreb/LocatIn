@@ -39,16 +39,13 @@ exports.destroy = function () {
 
 exports.findPassport = function (user, callback) {
 	mysql(function (connection) {
-		if (user.id)
-			var sql = "SELECT id, username, password FROM User WHERE id = :id";
-		else
-			var sql = "SELECT id, username, password FROM User WHERE username = :username";
+		var sql = "SELECT id, username, password FROM User WHERE username = :username";
 		connection.query(sql, user, function (err, result) {
 			if (err) console.error('FIND USER : ' + err.code);
 			if (result.length == 0) return callback(err, undefined);
 			var user = {
 				id: result[0].id,
-				login: result[0].username,
+				username: result[0].username,
 				validPassword: function(password) {
 					return password == result[0].password;
 				}

@@ -5,18 +5,27 @@ var router = express.Router();
 router.get('/', function(req, res) {
 	console.log(req.session.passport);
 	if (req.session.passport) {
-		res.render('index', {title: 'Index', user: req.session.passport.user});
+		res.render('index', {title: 'Index', rel: 'Home', user: req.session.passport.user});
 	} else {
-		res.render('index', {title: 'Index'});
+		res.render('index', {title: 'Index', rel: 'Home'});
+	}
+});
+
+router.get('/about', function(req, res) {
+	console.log(req.session.passport);
+	if (req.session.passport) {
+		res.render('about', {title: 'About', rel: 'About', user: req.session.passport.user});
+	} else {
+		res.render('about', {title: 'About', rel: 'About'});
 	}
 });
 
 router.get('/login', function(req, res) {
 	console.log(req.session.passport);
 	if (req.session.passport) {
-		res.render('login', {title: 'Login', user: req.session.passport.user});
+		res.render('login', {title: 'Login', rel: 'Login', user: req.session.passport.user});
 	} else {
-		res.render('login', {title: 'Login'});
+		res.render('login', {title: 'Login', rel: 'Login'});
 	}
 });
 

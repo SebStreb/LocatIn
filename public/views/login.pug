@@ -1,16 +1,9 @@
 extends ./layout.pug
 
-block breadcrumbs
-	ul.breadcrumb
-		li
-			a(href="/") Home
-		li(class="active") Login
-
 block content
 	.container
 		.page-header
 			h1 Login
-	.container
 		form(role="form", method="post", action="/login")
 			.form-group
 				label(for="usr") Username

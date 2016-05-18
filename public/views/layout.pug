@@ -11,27 +11,32 @@ html
 			title LocatIn | #{title}
 	body
 		block nav
-			nav.navbar.navbar-default
+			nav.navbar.navbar-inverse.navbar-fixed-top
 				.container-fluid
 					.navbar-header
-							a.navbar-brand(href="/") LocatIn
-					ul.nav.navbar-nav
-						li
-							a(href="/") Home
-					ul.nav.navbar-nav.navbar-right
-						if user
-							li.dropdown
-								a.dropdown-toggle(data-toggle="dropdown", href="/me") #[span.glyphicon.glyphicon-user] My Account #[span.caret]
-								ul.dropdown-menu
-									li
-										a(href="#") Test
-							li
-								a(href="/logout") Logout #[span.glyphicon.glyphicon-log-out]
-						else
-							li
-								a(href="/login") #[span.glyphicon.glyphicon-log-in] Login
+						button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#collapse", aria-expanded="false")
+							span.sr-only Toggle Navigation
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.nav.navbar-brand(href="/") LocatIn
+					.collapse.navbar-collapse#collapse
+						ul.nav.navbar-nav.navleft
+							li(class=(rel === 'Home') ? "active" : "notactive")
+								a(href="/") Home
+							li(class=(rel === 'About') ? "active" : "notactive")
+								a(href="/about") About
+						ul.nav.navbar-nav.navbar-right
+							if user
+								p.navbar-text Signed in as #[a(href="/me")= user]
+								li
+									a(href="/logout") Logout #[span.glyphicon.glyphicon-log-out]
+							else
+								li(class=(rel === 'Login') ? "active" : "notactive")
+									a(href="/login") #[span.glyphicon.glyphicon-log-in] Login
 		block content
 			p Not yet implented.
+		block test
 		block foot
-			footer.navbar-fixed-bottom
+			footer.container.navbar-fixed-bottom
 				p Website written by #[strong Sébastien Strebelle] for the course #[em LINGE1322 (Université Catholique de Louvain)]

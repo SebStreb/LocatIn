@@ -6,11 +6,11 @@ var user = require('./database/user.js');
 
 module.exports = function() {
 	passport.serializeUser(function(user, done) {
-		done(null, user.id);
+		done(null, user.username);
 	});
 
-	passport.deserializeUser(function(id, done) {
-		user.findPassport({id: id}, function (err, user) {
+	passport.deserializeUser(function(username, done) {
+		user.findPassport({username: username}, function (err, user) {
 			done(err, user);
 		});
 	});

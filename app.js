@@ -32,14 +32,14 @@ app.use('/', index);
 app.use(function(req, res) {
 	console.log(req.session.passport);
 	res.status(404);
- 	res.render('404', {title: '404'});
+ 	res.render('404', {title: '404', user: req.session.passport.user});
 });
 
 // Handle 500
 app.use(function(error, req, res, next) {
 	console.log(req.session.passport);
 	res.status(500);
-	res.render('500', {title: '500', error: error});
+	res.render('500', {title: '500', error: error, user: req.session.passport.user});
 });
 
 console.log('Server listening on port 3000');
