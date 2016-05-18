@@ -8,6 +8,9 @@ var session = require('express-session');
 var auth = require('./auth.js');
 
 var index = require('./routes/index.js');
+var client = require('./routes/client.js');
+var reports = require('./routes/reports.js');
+var management = require('./routes/management.js');
 
 var app = express();
 app.set('views', './public/views');
@@ -27,6 +30,9 @@ app.use(passport.session());
 auth();
 
 app.use('/', index);
+app.use('/client', client);
+app.use('/reports', reports);
+app.use('/management', management);
 
 // Handle 404
 app.use(function(req, res) {
