@@ -1,32 +1,12 @@
-h1 {
-	text-align: center;
-	color: #B5BBBD
+nav {
+	font-size: 18px;
+	letter-spacing: 3px;
 }
 
-h2 {
-	text-align: center;
-	color: #B5BBBD
-}
-
-h3 {
-	text-align: center;
-	color: #B5BBBD;
-}
-
-h4 {
-	text-align: center;
-	color: #B5BBBD;
-}
-
-p {
-	color: #B5BBBD
-}
-
-a {
-	color: #B5BBBD
-}
-
-body {
-	background-color: #21292B;
-	margin: 10% 20%;
+footer{
+    background-color : #474e5d;
+    text-align : center;
+    color : #eee;
+    font-size : 1.1em;
+	padding-top : 10px;
 }

@@ -1,20 +1,37 @@
 doctype html
-mixin link(href, text)
-	a(href=href)= text
-
-mixin list(...items)
-	ul
-		each item in items
-			li item
-
-html(charset="utf-8")
+html
 	head
 		block head
+			meta(charset="utf-8")
+			link(rel="stylesheet", href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
 			link(rel="stylesheet", type="text/css", href="stylesheets/style.css")
+			script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js")
+			script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
 		block title
 			title LocatIn | #{title}
 	body
 		block nav
+			nav.navbar.navbar-default
+				.container-fluid
+					.navbar-header
+							a.navbar-brand(href="/") LocatIn
+					ul.nav.navbar-nav
+						li
+							a(href="/") Home
+					ul.nav.navbar-nav.navbar-right
+						if user
+							li.dropdown
+								a.dropdown-toggle(data-toggle="dropdown", href="/me") #[span.glyphicon.glyphicon-user] My Account #[span.caret]
+								ul.dropdown-menu
+									li
+										a(href="#") Test
+							li
+								a(href="/logout") Logout #[span.glyphicon.glyphicon-log-out]
+						else
+							li
+								a(href="/login") #[span.glyphicon.glyphicon-log-in] Login
 		block content
 			p Not yet implented.
 		block foot
+			footer.navbar-fixed-bottom
+				p Website written by #[strong Sébastien Strebelle] for the course #[em LINGE1322 (Université Catholique de Louvain)]

@@ -1,6 +1,14 @@
 extends ./layout.pug
 
+block breadcrumbs
+	ul.breadcrumb
+		li(class="active") Home
+
 block content
-	h1 Welcome!
-	p Written by Sébastien Strebelle.
-	p See my #[+link('https://github.com/SebStreb/LocatIn', 'github')].
+	.jumbotron
+		.container
+			.page-header
+				h1 Welcome!
+			p Written by Sébastien Strebelle.
+			p See my #[a(href="https://github.com/SebStreb/LocatIn")= "github"].
+	.container
