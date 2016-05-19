@@ -24,17 +24,33 @@ html
 						ul.nav.navbar-nav.navleft
 							li(class=(rel === 'Home') ? "active" : "notactive")
 								a(href="/") Home
-							li(class=(user) ? "abled" : "disabled", class=(rel === 'Client') ? "active" : "notactive")
-								a(href="/client") Client
-							li(class=(user) ? "abled" : "disabled", class=(rel === 'Reports') ? "active" : "notactive")
-								a(href="/reports") Reports
-							li(class=(user) ? "abled" : "disabled", class=(rel === 'Management') ? "active" : "notactive")
-								a(href="/management") Management
+							li.dropdown(class=(user) ? "abled" : "disabled", class=(rel === 'Client') ? "active" : "notactive")
+								a.dropdown-toggle(href="/client", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") Client #[span.caret]
+								ul.dropdown-menu
+									li #[a(href="/client/inscription")= "Inscription"]
+									li #[a(href="/client/reservation")= "Reservation"]
+									li #[a(href="/client/departure")= "Departure"]
+									li #[a(href="/client/return")= "Return"]
+									li #[a(href="/client/payment")= "Payment"]
+									li #[a(href="/client/fidelity")= "Fidelity"]
+							li.dropdown(class=(user) ? "abled" : "disabled", class=(rel === 'Reports') ? "active" : "notactive")
+								a.dropdown-toggle(href="/reports", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") Reports #[span.caret]
+								ul.dropdown-menu
+									li #[a(href="/reports/supply")= "Supply"]
+									li #[a(href="/reports/reservations")= "Reservations"]
+									li #[a(href="/reports/locations")= "Locations"]
+									li #[a(href="/reports/history")= "History"]
+							li.dropdown(class=(user) ? "abled" : "disabled", class=(rel === 'Management') ? "active" : "notactive")
+								a.dropdown-toggle(href="/management", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") Management #[span.caret]
+								ul.dropdown-menu
+									li #[a(href="/management/vehicule")= "New vehicule"]
+									li #[a(href="/management/formule")= "Formule"]
+									li #[a(href="/management/prices")= "Prices"]
 							li(class=(rel === 'About') ? "active" : "notactive")
 								a(href="/about") About
 						ul.nav.navbar-nav.navbar-right
 							if user
-								p.navbar-text Signed in as #[a(href="/me")= user]
+								p.navbar-text Signed in as #[a.navbar-link(href="/me")= user]
 								li
 									a(href="/logout") Logout #[span.glyphicon.glyphicon-log-out]
 							else
