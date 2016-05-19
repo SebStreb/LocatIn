@@ -1,0 +1,17 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 Supply of cars
+		.table-responsive
+			table.table.table-striped
+				thead
+					tr
+						each field in fields
+							th #{field.name}
+				tbody
+					each result in results
+						tr
+							each value in result
+								td #{value}
