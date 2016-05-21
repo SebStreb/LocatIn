@@ -12,7 +12,7 @@ var pool  = mysql.createPool({
 
 var launch = function(callback) {
 	pool.getConnection(function(err, connection) {
-		if (err) console.error('CONNECT ERROR : ' + err.code);
+		if (err) console.error('CONNECT ERROR : ' + err.message);
 		else {
 			connection.config.queryFormat = function (query, values) {
 				if (!values) return query;

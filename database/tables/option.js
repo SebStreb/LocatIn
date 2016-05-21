@@ -10,7 +10,7 @@ exports.create = function () {
 			"libelle VARCHAR(20) NOT NULL\n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE OPTION : ' + err.code);
+			if (err) console.error('CREATE OPTION : ' + err.message);
 		});
 	});
 };
@@ -20,7 +20,7 @@ exports.insert = function (option) {
 		var sql =
 		"INSERT IGNORE INTO Options(code, libelle) VALUES(:code, :libelle)";
 		connection.query(sql, option, function (err, result) {
-			if (err) console.error('INSERT OPTION : ' + err.code);
+			if (err) console.error('INSERT OPTION : ' + err.message);
 			console.log('INSERTED IN OPTION');
 		});
 	});
@@ -30,7 +30,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Options";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY OPTION : ' + err.code);
+			if (err) console.error('DESTROY OPTION : ' + err.message);
 		});
 	});
 };

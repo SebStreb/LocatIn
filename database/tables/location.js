@@ -16,7 +16,7 @@ exports.create = function () {
 			"CHECK (kilometrageDepart > 0)\n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE LOCATION : ' + err.code);
+			if (err) console.error('CREATE LOCATION : ' + err.message);
 		});
 	});
 };
@@ -27,7 +27,7 @@ exports.insert = function (location) {
 		"Location(reservationNumero, kilometrageDepart, dateDepart, paiementCaution)\n" +
 		"VALUES(:reservationNumero, :kilometrageDepart, :dateDepart, :paiementCaution)";
 		connection.query(sql, location, function (err, result) {
-			if (err) console.error('INSERT LOCATION : ' + err.code);
+			if (err) console.error('INSERT LOCATION : ' + err.message);
 			console.log('INSERTED ID ' + result.insertId + ' IN LOCATION');
 		});
 	});
@@ -37,7 +37,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Location";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY LOCATION : ' + err.code);
+			if (err) console.error('DESTROY LOCATION : ' + err.message);
 		});
 	});
 };

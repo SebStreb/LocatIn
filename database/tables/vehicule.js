@@ -16,7 +16,7 @@ exports.create = function () {
 			"CHECK (prixAchat > 0) \n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE VEHICULE : ' + err.code);
+			if (err) console.error('CREATE VEHICULE : ' + err.message);
 		});
 	});
 };
@@ -26,7 +26,7 @@ exports.insert = function (vehicule) {
 		var sql = "INSERT IGNORE INTO Vehicule(modeleMarque, modeleType) \n" +
 		"VALUES(:modeleMarque, :modeleType)";
 		connection.query(sql, vehicule, function (err, result) {
-			if (err) console.error('INSERT VEHICULE : ' + err.code);
+			if (err) console.error('INSERT VEHICULE : ' + err.message);
 			console.log('INSERTED ID ' + result.insertId + ' IN VEHICULE');
 		});
 	});
@@ -36,7 +36,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Vehicule";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY VEHICULE : ' + err.code);
+			if (err) console.error('DESTROY VEHICULE : ' + err.message);
 		});
 	});
 };

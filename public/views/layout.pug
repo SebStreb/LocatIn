@@ -1,4 +1,18 @@
 doctype html
+
+mixin table()
+	.table-responsive
+		table.table.table-striped
+			thead
+				tr
+					each field in fields
+						th #{field.name}
+			tbody
+				each result in results
+					tr
+						each value in result
+							td #{value}
+
 html
 	head
 		block head
@@ -23,7 +37,7 @@ html
 					.collapse.navbar-collapse#collapse
 						ul.nav.navbar-nav.navleft
 							li(class=(rel === 'Home') ? "active" : "notactive")
-								a(href="/") Home
+								a(href="/") #[span.glyphicon.glyphicon-home] Home
 							li.dropdown(class=(user) ? "abled" : "disabled", class=(rel === 'Client') ? "active" : "notactive")
 								a.dropdown-toggle(href="/client", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") Client #[span.caret]
 								ul.dropdown-menu
@@ -36,6 +50,7 @@ html
 							li.dropdown(class=(user) ? "abled" : "disabled", class=(rel === 'Reports') ? "active" : "notactive")
 								a.dropdown-toggle(href="/reports", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") Reports #[span.caret]
 								ul.dropdown-menu
+									li #[a(href="/reports/catalog")= "Catalog"]
 									li #[a(href="/reports/supply")= "Supply"]
 									li #[a(href="/reports/reservations")= "Reservations"]
 									li #[a(href="/reports/locations")= "Locations"]
@@ -47,10 +62,10 @@ html
 									li #[a(href="/management/formule")= "Formule"]
 									li #[a(href="/management/prices")= "Prices"]
 							li(class=(rel === 'About') ? "active" : "notactive")
-								a(href="/about") About
+								a(href="/about") About #[span.glyphicon.glyphicon-info-sign]
 						ul.nav.navbar-nav.navbar-right
 							if user
-								p.navbar-text Signed in as #[a.navbar-link(href="/me")= user]
+								p.navbar-text #[span.glyphicon.glyphicon-user] Signed in as #[a.navbar-link(href="/me")= user]
 								li
 									a(href="/logout") Logout #[span.glyphicon.glyphicon-log-out]
 							else

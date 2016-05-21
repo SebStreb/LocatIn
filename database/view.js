@@ -63,7 +63,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS VFacture";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY VIEW : ' + err.code);
+			if (err) console.error('DESTROY VIEW : ' + err.message);
 		});
 	});
 };

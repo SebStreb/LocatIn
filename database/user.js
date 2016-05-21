@@ -11,7 +11,7 @@ exports.create = function () {
 			"password VARCHAR(20) NOT NULL\n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE USER : ' + err.code);
+			if (err) console.error('CREATE USER : ' + err.message);
 		});
 	});
 };
@@ -22,7 +22,7 @@ exports.insert = function (user) {
 		"INSERT IGNORE INTO User(username, password) \n" +
 		"VALUES(:username, :password)";
 		connection.query(sql, user, function (err, result) {
-			if (err) console.error('INSERT USER : ' + err.code);
+			if (err) console.error('INSERT USER : ' + err.message);
 			console.log('INSERTED ID ' + result.insertId + ' IN USER');
 		});
 	});
@@ -32,7 +32,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS User";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY USER : ' + err.code);
+			if (err) console.error('DESTROY USER : ' + err.message);
 		});
 	});
 };
@@ -41,7 +41,7 @@ exports.findPassport = function (user, callback) {
 	mysql(function (connection) {
 		var sql = "SELECT id, username, password FROM User WHERE username = :username";
 		connection.query(sql, user, function (err, result) {
-			if (err) console.error('FIND USER : ' + err.code);
+			if (err) console.error('FIND USER : ' + err.message);
 			if (result.length == 0) return callback(err, undefined);
 			var user = {
 				id: result[0].id,

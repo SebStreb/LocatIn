@@ -4,12 +4,19 @@ block content
 	.container
 		.page-header
 			h1 Login
-		form(role="form", method="post", action="/login")
-			.form-group
-				label(for="usr") Username
-				input#usr.form-control(type="username", name="username", placeholder="Username")
-			.form-group
-				label(for="psw") Password
-				input#psw.form-control(type="password", name="password", placeholder="Password")
-			.form-group
-				input.btn.btn-default(type="submit", value="Login")
+		.row
+			.col-md-4
+				span.glyphicon.glyphicon-lock
+			.col-md-8
+				form.form-horizontal(role="form", method="post", action="/login")
+					.form-group
+						label.control-label.col-sm-2(for="usr") Username :
+						.col-sm-10
+							input#usr.form-control(type="username", name="username", placeholder="Username")
+					.form-group
+						label.control-label.col-sm-2(for="psw") Password :
+						.col-sm-10
+							input#psw.form-control(type="password", name="password", placeholder="Password")
+					.form-group
+						.col-sm-offset-2.col-sm-10
+							input.btn.btn-default(type="submit", value="Login")

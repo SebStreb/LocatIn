@@ -12,7 +12,7 @@ exports.create = function () {
 			"FOREIGN KEY (assureurPrenom, assureurNom) REFERENCES Assureur(prenom, nom)\n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE ASSURANCE : ' + err.code);
+			if (err) console.error('CREATE ASSURANCE : ' + err.message);
 		});
 	});
 };
@@ -23,7 +23,7 @@ exports.insert = function (assurance) {
 		"INSERT IGNORE INTO Assurance(type, assureurPrenom, assureurNom)\n" +
 		"VALUES(:type, :assureurPrenom, :assureurNom)";
 		connection.query(sql, assurance, function (err, result) {
-			if (err) console.error('INSERT ASSURANCE : ' + err.code);
+			if (err) console.error('INSERT ASSURANCE : ' + err.message);
 			console.log('INSERTED ASSURANCE');
 		});
 	});
@@ -33,7 +33,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Assurance";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY ASSURANCE : ' + err.code);
+			if (err) console.error('DESTROY ASSURANCE : ' + err.message);
 		});
 	});
 };

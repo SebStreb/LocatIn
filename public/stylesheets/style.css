@@ -23,3 +23,14 @@ footer{
     font-size : 1.3em;
 	padding-top : 10px;
 }
+
+.glyphicon-lock {
+	color: #222;
+	padding: 20px 125px;
+	text-align : right;
+	font-size: 10em;
+}
+
+form {
+	padding: 50px 50px;
+}

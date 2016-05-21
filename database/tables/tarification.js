@@ -15,7 +15,7 @@ exports.create = function () {
 			"CHECK (amendeJournaliere > 0) \n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE TARIFICATION : ' + err.code);
+			if (err) console.error('CREATE TARIFICATION : ' + err.message);
 		});
 	});
 };
@@ -26,7 +26,7 @@ exports.insert = function (tarification) {
 		"Tarification(code, assuranceType, prixKilometre, amendeJournaliere) \n" +
 		"VALUES(:code, :assuranceType, :prixKilometre, :amendeJournaliere) ";
 		connection.query(sql, tarification, function (err, result) {
-			if (err) console.error('INSERT TARIFICATION : ' + err.code);
+			if (err) console.error('INSERT TARIFICATION : ' + err.message);
 			console.log('INSERTED IN TARIFICATION');
 		});
 	});
@@ -36,7 +36,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Tarification";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY TARIFICATION : ' + err.code);
+			if (err) console.error('DESTROY TARIFICATION : ' + err.message);
 		});
 	});
 };

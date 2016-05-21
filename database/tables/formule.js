@@ -11,7 +11,7 @@ exports.create = function () {
 			"CHECK (kilometrageForfaitaire > 0)\n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE FORMULE : ' + err.code);
+			if (err) console.error('CREATE FORMULE : ' + err.message);
 		});
 	});
 };
@@ -22,7 +22,7 @@ exports.insert = function (formule) {
 		"Formule(type, kilometrageForfaitaire)\n" +
 		"VALUES(:type, :kilometrageForfaitaire)";
 		connection.query(sql, formule, function (err, result) {
-			if (err) console.error('INSERT FORMULE : ' + err.code);
+			if (err) console.error('INSERT FORMULE : ' + err.message);
 			console.log('INSERTED IN FORMULE');
 		});
 	});
@@ -32,7 +32,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Formule";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY FORMULE : ' + err.code);
+			if (err) console.error('DESTROY FORMULE : ' + err.message);
 		});
 	});
 };

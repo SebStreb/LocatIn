@@ -18,19 +18,25 @@ var facture = require('./database/tables/facture.js');
 var reception = require('./database/tables/reception.js');
 var view = require('./database/view.js');
 
+var today = new Date();
+var tomorow = new Date();
+tomorow.setDate(today.getDate() + 1);
+var befTomorow = new Date();
+befTomorow.setHours(today.getHours() + 28);
+
 var connection = sql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root'
+    host     : 'localhost',
+    user     : 'root',
+    password : 'root'
 });
 connection.connect(function(err) {
-	if (err) console.error('CONNECT ERROR : ' + err.code);
+    if (err) console.error('CONNECT ERROR : ' + err.code);
 });
 connection.query("DROP DATABASE LocatIn", function (err) {
-	if (err) console.error('DROP DATABASE : ' + err.code);
+    if (err) console.error('DROP DATABASE : ' + err.code);
 });
 connection.query("CREATE DATABASE LocatIn", function (err) {
-	if (err) console.error('CREATE DATABASE : ' + err.code);
+    if (err) console.error('CREATE DATABASE : ' + err.code);
 });
 connection.end();
 
@@ -81,25 +87,26 @@ setTimeout(function () {
     montant.insert({tarificationCode: 'T1', formuleType: 'Journée', montantForfaitaire: 100});
     montant.insert({tarificationCode: 'T2', formuleType: 'Journée', montantForfaitaire: 80});
     montant.insert({tarificationCode: 'T1', formuleType: 'Semaine', montantForfaitaire: 500});
-    montant.insert({tarificationCode: 'T2', formuleType: 'Journée', montantForfaitaire: 450});
+    montant.insert({tarificationCode: 'T2', formuleType: 'Semaine', montantForfaitaire: 450});
     montant.insert({tarificationCode: 'T1', formuleType: 'Week-end', montantForfaitaire: 160});
-    montant.insert({tarificationCode: 'T1', formuleType: 'Week-end', montantForfaitaire: 160});
+    montant.insert({tarificationCode: 'T2', formuleType: 'Week-end', montantForfaitaire: 160});
 
     client.insert({prenom: 'Bernard', nom: 'Duchêne'});
     client.insert({prenom: 'Monique', nom: 'Ale'});
 
-    reservation.insert({formuleType: 'Journée', vehiculeNumero: 1, clientId: 1, etat: 'Annulée', dateAnnulation: null, nouvelleReservationNumero: 2});
+    reservation.insert({formuleType: 'Journée', vehiculeNumero: 1, clientId: 1, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null});
     reservation.insert({formuleType: 'Journée', vehiculeNumero: 2, clientId: 1, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null});
-    reservation.insert({formuleType: 'Semaine', vehiculeNumero: 3, clientId: 2, etat: 'Supprimée', dateAnnulation: 'NOW() + INTERVAL 1 DAY', nouvelleReservationNumero: null});
+    reservation.insert({formuleType: 'Semaine', vehiculeNumero: 3, clientId: 2, etat: 'Supprimée', dateAnnulation: tomorow, nouvelleReservationNumero: null});
     reservation.insert({formuleType: 'Week-end', vehiculeNumero: 3, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null});
     reservation.insert({formuleType: 'Journée', vehiculeNumero: 2, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null});
+    reservation.update({numero: 1}, {etat: 'Annulée', nouvelleReservationNumero: 5});
 
-    location.insert({reservationNumero: 2, kilometrageDepart: 20000, dateDepart: 'NOW()', paiementCaution: 1});
-    location.insert({reservationNumero: 4, kilometrageDepart: 50000, dateDepart: 'NOW()', paiementCaution: 0});
-    location.insert({reservationNumero: 5, kilometrageDepart: 18000, dateDepart: 'NOW()', paiementCaution: 1});
+    location.insert({reservationNumero: 2, kilometrageDepart: 20000, dateDepart: today, paiementCaution: 1});
+    location.insert({reservationNumero: 4, kilometrageDepart: 50000, dateDepart: today, paiementCaution: 0});
+    location.insert({reservationNumero: 5, kilometrageDepart: 18000, dateDepart: today, paiementCaution: 1});
 
-    reception.insert({locationNumeroContrat: 2, kilometrageArrivee: 50050, dateArrivee: 'NOW() + INTERVAL 1 DAY'});
-    reception.insert({locationNumeroContrat: 3, kilometrageArrivee: 20050, dateArrivee: 'NOW() + INTERVAL 1 DAY - INTERVAL 2 HOUR'});
+    reception.insert({locationNumeroContrat: 2, kilometrageArrivee: 50050, dateArrivee: tomorow});
+    reception.insert({locationNumeroContrat: 3, kilometrageArrivee: 20050, dateArrivee: befTomorow});
 
     facture.insert({locationNumeroContrat: 2});
     facture.insert({locationNumeroContrat: 3});

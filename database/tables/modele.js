@@ -17,7 +17,7 @@ exports.create = function () {
 			"CHECK (puissance > 0)\n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE MODELE : ' + err.code);
+			if (err) console.error('CREATE MODELE : ' + err.message);
 		});
 	});
 };
@@ -28,7 +28,7 @@ exports.insert = function (modele) {
 		"Modele(marque, type, optionCode, tarificationCode) \n" +
 		"VALUES(:marque, :type, :optionCode, :tarificationCode)";
 		connection.query(sql, modele, function (err, result) {
-			if (err) console.error('INSERT MODELE : ' + err.code);
+			if (err) console.error('INSERT MODELE : ' + err.message);
 			console.log('INSERTED IN MODELE');
 		});
 	});
@@ -38,7 +38,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Modele";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY MODELE : ' + err.code);
+			if (err) console.error('DESTROY MODELE : ' + err.message);
 		});
 	});
 };

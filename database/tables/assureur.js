@@ -14,7 +14,7 @@ exports.create = function () {
 			"PRIMARY KEY(prenom, nom) \n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE ASSUREUR : ' + err.code);
+			if (err) console.error('CREATE ASSUREUR : ' + err.message);
 		});
 	});
 };
@@ -24,7 +24,7 @@ exports.insert = function (assureur) {
 		var sql = "INSERT IGNORE INTO Assureur(prenom, nom) \n" +
 		"VALUES(:prenom, :nom)";
 		connection.query(sql, assureur, function (err, result, field) {
-			if (err) console.error('INSERT ASSUREUR : ' + err.code);
+			if (err) console.error('INSERT ASSUREUR : ' + err.message);
 			console.log('INSERTED IN ASSUREUR');
 		});
 	});
@@ -34,7 +34,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Assureur";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY ASSUREUR : ' + err.code);
+			if (err) console.error('DESTROY ASSUREUR : ' + err.message);
 		});
 	});
 };

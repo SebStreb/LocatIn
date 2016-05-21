@@ -14,7 +14,7 @@ exports.create = function () {
 			"CHECK (kilometrageArrivee > 0)\n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE RECEPTION : ' + err.code);
+			if (err) console.error('CREATE RECEPTION : ' + err.message);
 		});
 	});
 };
@@ -25,7 +25,7 @@ exports.insert = function (assureur) {
 		"Reception(locationNumeroContrat, kilometrageArrivee, dateArrivee)\n" +
 		"VALUES(:locationNumeroContrat, :kilometrageArrivee, :dateArrivee)";
 		connection.query(sql, assureur, function (err, result) {
-			if (err) console.error('INSERT RECEPTION : ' + err.code);
+			if (err) console.error('INSERT RECEPTION : ' + err.message);
 			console.log('INSERTED IN RECEPTION');
 		});
 	});
@@ -35,7 +35,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Reception";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY RECEPTION : ' + err.code);
+			if (err) console.error('DESTROY RECEPTION : ' + err.message);
 		});
 	});
 };

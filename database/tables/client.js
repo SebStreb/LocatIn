@@ -13,7 +13,7 @@ exports.create = function () {
 			"telephone VARCHAR(10)\n" +
 		")";
 		connection.query(sql, function (err) {
-			if (err) console.error('CREATE CLIENT : ' + err.code);
+			if (err) console.error('CREATE CLIENT : ' + err.message);
 		});
 	});
 };
@@ -23,7 +23,7 @@ exports.insert = function (client) {
 		var sql = "INSERT IGNORE INTO Client(prenom, nom) \n" +
 		"VALUES(:prenom, :nom)";
 		connection.query(sql, client, function (err, result) {
-			if (err) console.error('INSERT CLIENT : ' + err.code);
+			if (err) console.error('INSERT CLIENT : ' + err.message);
 			console.log('INSERTED ID ' + result.insertId + ' IN CLIENT');
 		});
 	});
@@ -33,7 +33,7 @@ exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Assureur";
 		connection.query(sql, function (err) {
-			if (err) console.error('DESTROY CLIENT : ' + err.code);
+			if (err) console.error('DESTROY CLIENT : ' + err.message);
 		});
 	});
 };

@@ -1,5 +1,30 @@
 var mysql = require('./connect.js');
 
+exports.getCatalog = function (callback) {
+	mysql(function (connection) {
+		var sql =
+		"SELECT\n" +
+			"CONCAT(M.marque, ' ', M.type) AS 'Model',\n" +
+			"COUNT(V.numero) AS 'Total number of cars',\n" +
+			"O.libelle AS 'Options',\n" +
+			"CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',\n" +
+			"CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',\n" +
+			"CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'\n" +
+		"FROM Vehicule V\n" +
+		"LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type\n" +
+		"LEFT JOIN Options O ON M.optionCode = O.code\n" +
+		"LEFT JOIN Tarification T On M.tarificationCode = T.code\n" +
+		"LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code\n" +
+		"WHERE Mo.formuleType = 'Journée'\n" +
+		"GROUP BY M.marque, M.type"
+		;
+		connection.query(sql, function (err, result, fields) {
+			if (err) console.error('GET CATALOG : ' + err.message);
+			callback(result, fields);
+		});
+	});
+};
+
 exports.getSupply = function (callback) {
 	mysql(function (connection) {
 		var sql =
@@ -16,6 +41,9 @@ exports.getSupply = function (callback) {
 		"LEFT JOIN Tarification T On M.tarificationCode = T.code\n" +
 		"LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code\n" +
 		"WHERE Mo.formuleType = 'Journée'\n" +
+		"AND V.numero NOT IN(\n" +
+			"SELECT R.vehiculeNumero FROM Reservation R\n" +
+			"WHERE R.etat = 'Effectif')\n" +
 		"GROUP BY M.marque, M.type"
 		;
 		connection.query(sql, function (err, result, fields) {
