@@ -18,6 +18,17 @@ exports.create = function () {
 	});
 };
 
+exports.getAll = function (callback) {
+	mysql(function (connection) {
+		var sql = "SELECT id AS ID, CONCAT(C.prenom, ' ', C.nom) AS 'Client'\n" +
+		"FROM Client C";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('SEARCH CLIENT : ' + err.message);
+			callback(result);
+		});
+	});
+};
+
 exports.insert = function (client) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO Client(prenom, nom) \n" +

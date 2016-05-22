@@ -1,0 +1,37 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 New client
+		.row
+			.col-md-4
+				p.text-center
+					span.glyphicon.glyphicon-user.glyphicon-form
+			.col-md-8
+				form.form-horizontal(role="form", method="post", action="/client/inscription")
+					.form-group
+						label.control-label.col-sm-2(for="first") Name :
+						.col-sm-10
+							input#first.form-control(type="text", name="prenom", placeholder="First name")
+						.col-sm-offset-2.col-sm-10
+							input#first.form-control(type="text", name="autre", placeholder="Middle name")
+						.col-sm-offset-2.col-sm-10
+							input#last.form-control(type="text", name="nom", placeholder="Last name")
+					.form-group
+						label.control-label.col-sm-2(for="adr") Address :
+						.col-sm-6
+							input#adr.form-control(type="text", name="rue", placeholder="Street")
+						.col-sm-4
+							input#adr.form-control(type="number", name="nbr", placeholder="Number")
+						.col-sm-offset-2.col-sm-6
+							input#adr.form-control(type="text", name="ville", placeholder="City")
+						.col-sm-4
+							input#adr.form-control(type="number", name="postcod", placeholder="Post code")
+					.form-group
+						label.control-label.col-sm-2(for="phone") Phone number :
+						.col-sm-10
+							input#adr.form-control(type="tel", name="phone", placeholder="Phone number")
+					.form-group
+						.col-sm-offset-2.col-sm-10
+							input.btn.btn-default(type="submit", value="Create")

@@ -22,6 +22,17 @@ exports.create = function () {
 	});
 };
 
+exports.getAll = function (callback) {
+	mysql(function (connection) {
+		var sql = "SELECT CONCAT(M.marque, ' ', M.type) AS 'Modele'\n" +
+		"FROM Modele M";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('SEARCH MODELE : ' + err.message);
+			callback(result);
+		});
+	});
+};
+
 exports.insert = function (modele) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO \n" +

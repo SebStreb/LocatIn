@@ -15,6 +15,17 @@ exports.create = function () {
 	});
 };
 
+exports.getAll = function (callback) {
+	mysql(function (connection) {
+		var sql = "SELECT O.code AS 'Code', O.libelle AS 'Libelle'\n" +
+		"FROM Options O";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('SEARCH OPTION : ' + err.message);
+			callback(result);
+		});
+	});
+};
+
 exports.insert = function (option) {
 	mysql(function (connection) {
 		var sql =

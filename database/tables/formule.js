@@ -16,6 +16,17 @@ exports.create = function () {
 	});
 };
 
+exports.getAll = function (callback) {
+	mysql(function (connection) {
+		var sql = "SELECT F.type AS 'Type'\n" +
+		"FROM Formule F";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('SEARCH FORMULE : ' + err.message);
+			callback(result);
+		});
+	});
+};
+
 exports.insert = function (formule) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO\n" +
