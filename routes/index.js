@@ -2,6 +2,8 @@ var passport = require('passport');
 var express = require('express');
 var router = express.Router();
 
+var user = require('../database/user.js');
+
 router.get('/', function(req, res) {
 	console.log(req.session.passport);
 	if (req.session.passport) {
@@ -40,5 +42,23 @@ router.post('/login', passport.authenticate('local',
 		}
 	)
 );
+
+router.get('/exec', function (req, res) {
+	if (req.session.passport.user != 'admin') {
+		res.redirect('/');
+	} else {
+		res.render('exec', {title: 'SQL', rel: 'Management', user: req.session.passport.user});
+	}
+});
+
+router.post('/exec', function (req, res) {
+	if (req.session.passport.user != 'admin') {
+		res.redirect('/');
+	} else {
+		user.exec(req.body.sql, function (results, fields) {
+			res.render('exec', {title: 'SQL', results: results, fields: fields, rel: 'Management', user: req.session.passport.user});
+		});
+	}
+})
 
 module.exports = router;

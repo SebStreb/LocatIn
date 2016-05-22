@@ -1,0 +1,23 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 Reservation
+		.table-responsive
+			table.table.table-striped
+				thead
+					tr
+						each field in fields
+							th #{field.name}
+				tbody
+					form.form-horizontal(role="form", method="post", action="/client/reservation-3")
+						input(type="hidden", name="client", value=client)
+						input(type="hidden", name="formule", value=formule)
+						input(type="hidden", name="depart", value=depart)
+						each result in results
+							tr
+								each value in result
+									td #{value}
+								td #[input(type="radio", name="vehicule", value=result.Model)]
+						input.btn.btn-default(type="submit", value="Choose")

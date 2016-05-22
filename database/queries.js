@@ -1,5 +1,99 @@
 var mysql = require('./connect.js');
 
+exports.getProposition = function (returnDate, modele, option, callback) {
+	mysql(function (connection) {
+		if (modele && option) {
+			var sql =
+			"SELECT\n" +
+				"CONCAT(M.marque, ' ', M.type) AS 'Model',\n" +
+				"COUNT(V.numero) AS 'Total number of cars',\n" +
+				"O.libelle AS 'Options',\n" +
+				"CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',\n" +
+				"CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',\n" +
+				"CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'\n" +
+			"FROM Vehicule V\n" +
+			"LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type\n" +
+			"LEFT JOIN Options O ON M.optionCode = O.code\n" +
+			"LEFT JOIN Tarification T On M.tarificationCode = T.code\n" +
+			"LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code\n" +
+			"WHERE Mo.formuleType = 'Journée'\n" +
+			"AND CONCAT(M.marque, ' ', M.type) = '" + modele + "' \n" +
+			"AND O.code = '" + option + "' \n" +
+			"AND V.numero NOT IN(\n" +
+				"SELECT R.vehiculeNumero FROM Reservation R\n" +
+				"WHERE R.etat = 'Effectif')\n" +
+			"GROUP BY M.marque, M.type"
+			;
+		} else if (modele) {
+			var sql =
+			"SELECT\n" +
+				"CONCAT(M.marque, ' ', M.type) AS 'Model',\n" +
+				"COUNT(V.numero) AS 'Total number of cars',\n" +
+				"O.libelle AS 'Options',\n" +
+				"CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',\n" +
+				"CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',\n" +
+				"CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'\n" +
+			"FROM Vehicule V\n" +
+			"LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type\n" +
+			"LEFT JOIN Options O ON M.optionCode = O.code\n" +
+			"LEFT JOIN Tarification T On M.tarificationCode = T.code\n" +
+			"LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code\n" +
+			"WHERE Mo.formuleType = 'Journée'\n" +
+			"AND CONCAT(M.marque, ' ', M.type) = '" + modele + "' \n" +
+			"AND V.numero NOT IN(\n" +
+				"SELECT R.vehiculeNumero FROM Reservation R\n" +
+				"WHERE R.etat = 'Effectif')\n" +
+			"GROUP BY M.marque, M.type"
+			;
+		} else if (option) {
+			var sql =
+			"SELECT\n" +
+				"CONCAT(M.marque, ' ', M.type) AS 'Model',\n" +
+				"COUNT(V.numero) AS 'Total number of cars',\n" +
+				"O.libelle AS 'Options',\n" +
+				"CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',\n" +
+				"CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',\n" +
+				"CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'\n" +
+			"FROM Vehicule V\n" +
+			"LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type\n" +
+			"LEFT JOIN Options O ON M.optionCode = O.code\n" +
+			"LEFT JOIN Tarification T On M.tarificationCode = T.code\n" +
+			"LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code\n" +
+			"WHERE Mo.formuleType = 'Journée'\n" +
+			"AND O.code = '" + option + "' \n" +
+			"AND V.numero NOT IN(\n" +
+				"SELECT R.vehiculeNumero FROM Reservation R\n" +
+				"WHERE R.etat = 'Effectif')\n" +
+			"GROUP BY M.marque, M.type"
+			;
+		} else {
+			var sql =
+			"SELECT\n" +
+				"CONCAT(M.marque, ' ', M.type) AS 'Model',\n" +
+				"COUNT(V.numero) AS 'Total number of cars',\n" +
+				"O.libelle AS 'Options',\n" +
+				"CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',\n" +
+				"CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',\n" +
+				"CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'\n" +
+			"FROM Vehicule V\n" +
+			"LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type\n" +
+			"LEFT JOIN Options O ON M.optionCode = O.code\n" +
+			"LEFT JOIN Tarification T On M.tarificationCode = T.code\n" +
+			"LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code\n" +
+			"WHERE Mo.formuleType = 'Journée'\n" +
+			"AND V.numero NOT IN(\n" +
+				"SELECT R.vehiculeNumero FROM Reservation R\n" +
+				"WHERE R.etat = 'Effectif')\n" +
+			"GROUP BY M.marque, M.type"
+			;
+		}
+		connection.query(sql, function (err, result, fields) {
+			if (err) console.error('GET PROPO : ' + err.message);
+			callback(result, fields);
+		});
+	});
+};
+
 exports.getCatalog = function (callback) {
 	mysql(function (connection) {
 		var sql =

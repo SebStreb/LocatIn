@@ -16,6 +16,15 @@ exports.create = function () {
 	});
 };
 
+exports.exec = function (sql, callback) {
+	mysql(function (connection) {
+		connection.query(sql, function (err, result, field) {
+			if (err) console.error('EXEC : ' + err.message);
+			callback(result, field)
+		})
+	});
+};
+
 exports.insert = function (user) {
 	mysql(function (connection) {
 		var sql =

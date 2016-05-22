@@ -21,6 +21,17 @@ exports.create = function () {
 	});
 };
 
+exports.getOne = function (modele, callback) {
+	mysql(function (connection) {
+		var sql = "SELECT numero FROM Vehicule\n" +
+		"WHERE CONCAT(modeleMarque, ' ', modeleType) = '" + modele + "'";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('GET VEHICULE : ' + err.message);
+			callback(result[0].numero);
+		});
+	});
+};
+
 exports.insert = function (vehicule) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO Vehicule(modeleMarque, modeleType) \n" +

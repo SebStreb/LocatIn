@@ -1,0 +1,18 @@
+extends ./layout.pug
+
+block content
+	.container
+		.page-header
+			h1 Execute SQL
+		form.form-horizontal(role="form", method="post", action="/exec")
+			.form-group
+				textarea.form-control(name="sql", rows="12", cols="40", placeholder="SQL Query")
+			.form-group
+				p.text-center
+					input.btn.btn-default(type="submit", value="Execute")
+		if fields
+			+table
+		else if results
+			p.text-center Query executed ! #{results.affectedRows} rows affected.
+		else
+			p.text-center Error in SQL. Check logs for message.
