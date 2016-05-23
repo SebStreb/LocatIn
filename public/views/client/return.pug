@@ -1,0 +1,27 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 Return
+		.row
+			.col-md-4
+				p.text-center
+					span.glyphicon.glyphicon-download.glyphicon-form
+			.col-md-8
+				form.form-horizontal(role="form", method="post", action="/client/return")
+					.form-group
+						label.control-label.col-sm-2(for="con") Contract :
+						.col-sm-10
+							input#con.form-control(type="number", name="contrat", placeholder="Contract")
+					.form-group
+						label.control-label.col-sm-2(for="mile") Return mileage :
+						.col-sm-10
+							input#mile.form-control(type="number", name="kil", placeholder="Mileage")
+					.form-group
+						label.control-label.col-sm-2(for="dmg") Dammage :
+						.col-sm-10
+							input#dmg.form-control(type="number", name="dmg", placeholder="Dammage")
+					.form-group
+						.col-sm-offset-2.col-sm-10
+							input.btn.btn-default(type="submit", value="Return")

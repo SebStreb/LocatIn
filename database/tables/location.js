@@ -1,5 +1,6 @@
 'use strict';
 
+var facture = require('./facture.js');
 var mysql = require('../connect.js');
 
 exports.create = function () {
@@ -17,6 +18,23 @@ exports.create = function () {
 		")";
 		connection.query(sql, function (err) {
 			if (err) console.error('CREATE LOCATION : ' + err.message);
+		});
+	});
+};
+
+exports.endRes = function (numeroContrat) {
+	mysql(function (connection) {
+		var sql = "SELECT reservationNumero\n" +
+		"FROM Location\n" +
+		"WHERE numeroContrat = " + numeroContrat;
+		facture.insert({locationNumeroContrat: numeroContrat});
+		connection.query(sql, function (err, result) {
+			if (err) console.error('FINDRES LOCATION : ' + err.message);
+			sql = "UPDATE Reservation SET etat = 'Terminée'\n" +
+			"WHERE numero = " + result[0].reservationNumero;
+			connection.query(sql, function (err) {
+				if (err) console.error('ENDRES LOCATION : ' + err.message);
+			});
 		});
 	});
 };

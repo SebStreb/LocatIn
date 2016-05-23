@@ -49,6 +49,16 @@ exports.update = function (find, replace) {
 	});
 };
 
+exports.suppr = function (numero) {
+	mysql(function (connection) {
+		var sql = "UPDATE Reservation\n" +
+		"SET etat = 'Supprimée', dateAnnulation = NOW() WHERE numero = " + numero;
+		connection.query(sql, function (err, result) {
+			if (err) console.error('SUPPR RESERVATION : ' + err.message);
+		});
+	});
+};
+
 exports.destroy = function () {
 	mysql(function (connection) {
 		var sql = "DROP TABLE IF EXISTS Reservation";

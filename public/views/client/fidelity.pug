@@ -1,0 +1,23 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 Payment
+		.row
+			.col-md-4
+				p.text-center
+					span.glyphicon.glyphicon-shopping-cart.glyphicon-form
+			.col-md-8
+				form.form-horizontal(role="form", method="post", action="/client/fidelity")
+					.form-group
+						label.control-label.col-sm-2(for="cli") Client :
+						.col-sm-10
+							select#cli.form-control(name="client")
+								each row in clients
+									option(value=row.ID) #{row.Client}
+					.form-group
+						.col-sm-offset-2.col-sm-10
+							input.btn.btn-default(type="submit", value="Search")
+		if results
+			+table

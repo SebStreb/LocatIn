@@ -6,6 +6,8 @@ var formule = require('../database/tables/formule.js');
 var modele = require('../database/tables/modele.js');
 var option = require('../database/tables/option.js');
 var reservation = require('../database/tables/reservation.js');
+var location = require('../database/tables/location.js');
+var reception = require('../database/tables/reception.js');
 var vehicule = require('../database/tables/vehicule.js');
 var queries = require('../database/queries.js');
 
@@ -75,13 +77,91 @@ router.get('/reservation-3', function (req, res) {
 
 router.post('/reservation-3', function (req, res) {
 	console.log(req.session.passport);
-	console.log(req.body.formule);
-	console.log(req.body.vehicule);
-	console.log(req.body.client);
 	vehicule.getOne(req.body.vehicule, function (vehiculeId) {
 		reservation.insert({formuleType: req.body.formule, vehiculeNumero: vehiculeId, clientId: req.body.client, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null});
-		res.redirect('/client/reservation');
+		res.redirect('/');
+	});
+});
 
+router.get('/departure', function (req, res) {
+	console.log(req.session.passport);
+	res.render('client/departure', {title: 'Departure', rel: 'Client', user: req.session.passport.user});
+});
+
+router.get('/departure-1', function (req, res) {
+	console.log(req.session.passport);
+	res.redirect('/client/departure');
+});
+
+router.post('/departure-1', function (req, res) {
+	console.log(req.session.passport);
+	location.insert({reservationNumero: req.body.num, kilometrageDepart: req.body.kil, dateDepart: new Date(), paiementCaution: req.body.caution == 'paid'});
+	res.redirect('/');
+});
+
+router.get('/departure-2', function (req, res) {
+	console.log(req.session.passport);
+	res.redirect('/client/departure');
+});
+
+router.post('/departure-2', function (req, res) {
+	console.log(req.session.passport);
+	reservation.update({numero: req.body.num}, {etat: 'Annulée', nouvelleReservationNumero: req.body.new});
+	res.redirect('/');
+});
+
+router.get('/departure-3', function (req, res) {
+	console.log(req.session.passport);
+	res.redirect('/client/departure');
+});
+
+router.post('/departure-3', function (req, res) {
+	console.log(req.session.passport);
+	reservation.suppr(req.body.num);
+	res.redirect('/');
+});
+
+router.get('/return', function (req, res) {
+	console.log(req.session.passport);
+	res.render('client/return', {title: 'Return', rel: 'Client', user: req.session.passport.user});
+});
+
+router.post('/return', function (req, res) {
+	console.log(req.session.passport);
+	reception.insert({locationNumeroContrat: req.body.contrat, kilometrageArrivee: req.body.kil, dateArrivee: new Date()});
+	location.endRes(req.body.contrat);
+	res.redirect('/');
+});
+
+router.get('/payment', function (req, res) {
+	console.log(req.session.passport);
+	client.getAll(function (clients) {
+		res.render('client/payment', {title: 'Payment', clients: clients, rel: 'Client', user: req.session.passport.user});
+	});
+});
+
+router.post('/payment', function (req, res) {
+	console.log(req.session.passport);
+	client.getAll(function (clients) {
+		queries.getFact(req.body.client, function (results, fields) {
+			res.render('client/payment', {title: 'Payment', clients: clients, results: results, fields: fields, rel: 'Client', user: req.session.passport.user});
+		});
+	});
+});
+
+router.get('/fidelity', function (req, res) {
+	console.log(req.session.passport);
+	client.getAll(function (clients) {
+		res.render('client/fidelity', {title: 'Fidelity', clients: clients, rel: 'Client', user: req.session.passport.user});
+	});
+});
+
+router.post('/fidelity', function (req, res) {
+	console.log(req.session.passport);
+	client.getAll(function (clients) {
+		queries.getFid(req.body.client, function (results, fields) {
+			res.render('client/fidelity', {title: 'Fidelity', clients: clients, results: results, fields: fields, rel: 'Client', user: req.session.passport.user});
+		});
 	});
 });
 

@@ -1,0 +1,74 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 Departure
+		.btn-group.btn-group-justified
+			.btn-group
+				button.btn.btn-success(data-toggle="collapse", data-target="#go") Departure
+			.btn-group
+				button.btn.btn-warning(data-toggle="collapse", data-target="#fu") Not disponible
+			.btn-group
+				button.btn.btn-danger(data-toggle="collapse", data-target="#no") Cancel
+
+		.collapse.in#go
+			.row
+				.col-md-4
+					p.text-center
+						span.glyphicon.glyphicon-ok-circle.glyphicon-form
+				.col-md-8
+					form.form-horizontal(role="form", method="post", action="/client/departure-1")
+						.form-group
+							label.control-label.col-sm-4(for="num") Reservation number :
+							.col-sm-8
+								input#num.form-control(type="number", name="num", placeholder="number")
+						.form-group
+							label.control-label.col-sm-4(for="mil") Initial mileage :
+							.col-sm-8
+								input#mil.form-control(type="number", name="kil", placeholder="mileage")
+						.form-group
+							label.control-label.col-sm-4(for="li") License number :
+							.col-sm-8
+								input#li.form-control(type="text", name="permis", placeholder="License number")
+						.form-group
+							label.control-label.col-sm-4(for="dep") Deposit :
+							.col-sm-8
+								input#dep.form-control(type="checkbox", name="caution", value="paid")
+						.form-group
+							.col-sm-offset-4.col-sm-8
+								input.btn.btn-default(type="submit", value="Go")
+
+		.collapse#fu
+			.row
+				.col-md-4
+					p.text-center
+						span.glyphicon.glyphicon-ban-circle.glyphicon-form
+				.col-md-8
+					form.form-horizontal(role="form", method="post", action="/client/departure-2")
+						.form-group
+							label.control-label.col-sm-4(for="num") Reservation number :
+							.col-sm-8
+								input#num.form-control(type="number", name="num", placeholder="number")
+						.form-group
+							label.control-label.col-sm-4(for="new") New reservation :
+							.col-sm-8
+								input#new.form-control(type="number", name="new", placeholder="number")
+						.form-group
+							.col-sm-offset-4.col-sm-8
+								input.btn.btn-default(type="submit", value="Set")
+
+		.collapse#no
+			.row
+				.col-md-4
+					p.text-center
+						span.glyphicon.glyphicon-remove-circle.glyphicon-form
+				.col-md-8
+					form.form-horizontal(role="form", method="post", action="/client/departure-3")
+						.form-group
+							label.control-label.col-sm-4(for="num") Reservation number :
+							.col-sm-8
+								input#num.form-control(type="number", name="num", placeholder="number")
+						.form-group
+							.col-sm-offset-4.col-sm-8
+								input.btn.btn-default(type="submit", value="Cancel")

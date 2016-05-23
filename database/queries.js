@@ -232,3 +232,43 @@ exports.getHist = function (callback) {
 		});
 	});
 };
+
+exports.getFact = function (cli, callback) {
+	mysql(function (connection) {
+		var sql =
+		"SELECT\n" +
+			"V.factureNumero AS 'Bill Number',\n" +
+			"CONCAT(C.prenom, ' ', C.nom) AS 'Client',\n" +
+			"C.adresse AS 'Billing address',\n" +
+			"V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + " +
+			"V.fraisKmSupps - V.compensationAnnulation AS 'Total'\n" +
+		"FROM Client C\n" +
+		"LEFT JOIN VFacture V ON V.clientId = C.id\n" +
+		"WHERE C.id = " + cli + "\n" +
+		"ORDER BY V.factureNumero DESC"
+		;
+		connection.query(sql, function (err, result, fields) {
+			if (err) console.error('GET FACTURES : ' + err.message);
+			callback(result, fields);
+		});
+	});
+};
+
+exports.getFid = function (cli, callback) {
+	mysql(function (connection) {
+		var sql =
+		"SELECT\n" +
+			"CONCAT(C.prenom, ' ', C.nom) AS 'Client',\n" +
+			"COUNT(V.factureNumero) AS 'Number of reservations',\n" +
+			"SUM(V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps +" +
+			"V.fraisKmSupps - V.compensationAnnulation) AS 'Sum'\n" +
+		"FROM Client C\n" +
+		"LEFT JOIN VFacture V ON V.clientId = C.id\n" +
+		"WHERE C.id = " + cli + "\n"
+		;
+		connection.query(sql, function (err, result, fields) {
+			if (err) console.error('GET FIDELITY : ' + err.message);
+			callback(result, fields);
+		});
+	});
+};
