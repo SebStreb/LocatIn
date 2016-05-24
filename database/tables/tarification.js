@@ -20,6 +20,16 @@ exports.create = function () {
 	});
 };
 
+exports.getAll = function (callback) {
+	mysql(function (connection) {
+		var sql = "SELECT T.code as 'Code' FROM Tarification T";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('SEARCH TARIFICATION : ' + err.message);
+			callback(result);
+		});
+	});
+};
+
 exports.insert = function (tarification) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO \n" +

@@ -1,0 +1,23 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 New vehicule
+		.row
+			.col-md-4
+				p.text-center
+					span.glyphicon.glyphicon-plus-sign.glyphicon-form
+			.col-md-8
+				form.form-horizontal(role="form", method="post", action="/management/vehicule")
+					.form-group
+						label.control-label.col-sm-2(for="model") Model :
+						.col-sm-10
+							select#model.form-control(name="model")
+								each row in results
+									option(value=row.Modele) #{row.Modele}
+					.form-group
+						.col-sm-offset-2.col-sm-5
+							input.btn.btn-default(type="submit", value="Add")
+						.col-sm-5
+							a.btn.btn-default(href="/management/vehicule-2") New model
