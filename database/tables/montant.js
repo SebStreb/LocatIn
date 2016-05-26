@@ -20,7 +20,7 @@ exports.create = function () {
 	});
 };
 
-exports.insert = function (montant) {
+exports.insert = function (montant, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO\n" +
 		"Montant(tarificationCode, formuleType, montantForfaitaire)\n" +
@@ -28,6 +28,7 @@ exports.insert = function (montant) {
 		connection.query(sql, montant, function (err, result) {
 			if (err) console.error('INSERT MONTANT : ' + err.message);
 			console.log('INSERTED IN MONTANT');
+			callback({err: err, insert: true, table: 'Montant'});
 		});
 	});
 };

@@ -57,57 +57,137 @@ setTimeout(function () {
     reception.create();
     view.create();
 
-    user.insert({username: 'admin', password: 'tux'});
-    user.insert({username: 'SebStreb', password: 'Yolo1234'});
+    user.insert({username: 'admin', password: 'tux'}, function () {
 
-    assureur.insert({prenom: 'Jean-Luc', nom: 'Durant'});
-    assureur.insert({prenom: 'Michel', nom: 'Dubois'});
+    });
+    user.insert({username: 'SebStreb', password: 'Yolo1234'}, function () {
 
-    assurance.insert({type: 'Omnium', assureurPrenom: 'Jean-Luc', assureurNom: 'Durant'});
-    assurance.insert({type: 'Kilométrage', assureurPrenom: 'Jean-Luc', assureurNom: 'Durant'});
-    assurance.insert({type: 'Annuelle', assureurPrenom: 'Michel', assureurNom: 'Dubois'});
+    });
 
-    option.insert({code: 'O1', libelle: 'Break - 5 portes'});
-    option.insert({code: 'O2', libelle: 'Berlines - 5 portes'});
+    assureur.insert({prenom: 'Jean-Luc', nom: 'Durant'}, function () {
 
-    tarification.insert({code: 'T1', assuranceType: 'Omnium', prixKilometre: 1, amendeJournaliere: 30});
-    tarification.insert({code: 'T2', assuranceType: 'Kilométrage', prixKilometre: 0.5, amendeJournaliere: 40});
+    });
+    assureur.insert({prenom: 'Michel', nom: 'Dubois'}, function () {
 
-    modele.insert({marque: 'Audi', type: 'A3', optionCode: 'O1', tarificationCode: 'T2'});
-    modele.insert({marque: 'BMW', type: '520', optionCode: 'O1', tarificationCode: 'T1'});
+    });
 
-    vehicule.insert({modeleMarque: 'Audi', modeleType: 'A3'});
-    vehicule.insert({modeleMarque: 'Audi', modeleType: 'A3'});
-    vehicule.insert({modeleMarque: 'BMW', modeleType: '520'});
+    assurance.insert({type: 'Omnium', assureurPrenom: 'Jean-Luc', assureurNom: 'Durant'}, function () {
 
-    formule.insert({type: 'Journée', kilometrageForfaitaire: 50});
-    formule.insert({type: 'Semaine', kilometrageForfaitaire: 250});
-    formule.insert({type: 'Week-end', kilometrageForfaitaire: 100});
+    });
+    assurance.insert({type: 'Kilométrage', assureurPrenom: 'Jean-Luc', assureurNom: 'Durant'}, function () {
 
-    montant.insert({tarificationCode: 'T1', formuleType: 'Journée', montantForfaitaire: 100});
-    montant.insert({tarificationCode: 'T2', formuleType: 'Journée', montantForfaitaire: 80});
-    montant.insert({tarificationCode: 'T1', formuleType: 'Semaine', montantForfaitaire: 500});
-    montant.insert({tarificationCode: 'T2', formuleType: 'Semaine', montantForfaitaire: 450});
-    montant.insert({tarificationCode: 'T1', formuleType: 'Week-end', montantForfaitaire: 160});
-    montant.insert({tarificationCode: 'T2', formuleType: 'Week-end', montantForfaitaire: 160});
+    });
+    assurance.insert({type: 'Annuelle', assureurPrenom: 'Michel', assureurNom: 'Dubois'}, function () {
 
-    client.insert({prenom: 'Bernard', nom: 'Duchêne'});
-    client.insert({prenom: 'Monique', nom: 'Ale'});
+    });
 
-    reservation.insert({formuleType: 'Journée', vehiculeNumero: 1, clientId: 1, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null});
-    reservation.insert({formuleType: 'Journée', vehiculeNumero: 2, clientId: 1, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null});
-    reservation.insert({formuleType: 'Semaine', vehiculeNumero: 3, clientId: 2, etat: 'Supprimée', dateAnnulation: tomorow, nouvelleReservationNumero: null});
-    reservation.insert({formuleType: 'Week-end', vehiculeNumero: 3, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null});
-    reservation.insert({formuleType: 'Journée', vehiculeNumero: 2, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null});
-    reservation.update({numero: 1}, {etat: 'Annulée', nouvelleReservationNumero: 5});
+    option.insert({code: 'O1', libelle: 'Break - 5 portes'}, function () {
 
-    location.insert({reservationNumero: 2, kilometrageDepart: 20000, dateDepart: today, paiementCaution: 1});
-    location.insert({reservationNumero: 4, kilometrageDepart: 50000, dateDepart: today, paiementCaution: 0});
-    location.insert({reservationNumero: 5, kilometrageDepart: 18000, dateDepart: today, paiementCaution: 1});
+    });
+    option.insert({code: 'O2', libelle: 'Berlines - 5 portes'}, function () {
 
-    reception.insert({locationNumeroContrat: 2, kilometrageArrivee: 50050, dateArrivee: tomorow});
-    reception.insert({locationNumeroContrat: 3, kilometrageArrivee: 20050, dateArrivee: befTomorow});
+    });
 
-    facture.insert({locationNumeroContrat: 2});
-    facture.insert({locationNumeroContrat: 3});
+    tarification.insert({code: 'T1', assuranceType: 'Omnium', prixKilometre: 1, amendeJournaliere: 30}, function () {
+
+    });
+    tarification.insert({code: 'T2', assuranceType: 'Kilométrage', prixKilometre: 0.5, amendeJournaliere: 40}, function () {
+
+    });
+
+    modele.insert({marque: 'Audi', type: 'A3', optionCode: 'O1', tarificationCode: 'T2'}, function () {
+
+    });
+    modele.insert({marque: 'BMW', type: '520', optionCode: 'O1', tarificationCode: 'T1'}, function () {
+
+    });
+
+    vehicule.insert({modeleMarque: 'Audi', modeleType: 'A3'}, function () {
+
+    });
+    vehicule.insert({modeleMarque: 'Audi', modeleType: 'A3'}, function () {
+
+    });
+    vehicule.insert({modeleMarque: 'BMW', modeleType: '520'}, function () {
+
+    });
+
+    formule.insert({type: 'Journée', kilometrageForfaitaire: 50}, function () {
+
+    });
+    formule.insert({type: 'Semaine', kilometrageForfaitaire: 250}, function () {
+
+    });
+    formule.insert({type: 'Week-end', kilometrageForfaitaire: 100}, function () {
+
+    });
+
+    montant.insert({tarificationCode: 'T1', formuleType: 'Journée', montantForfaitaire: 100}, function () {
+
+    });
+    montant.insert({tarificationCode: 'T2', formuleType: 'Journée', montantForfaitaire: 80}, function () {
+
+    });
+    montant.insert({tarificationCode: 'T1', formuleType: 'Semaine', montantForfaitaire: 500}, function () {
+
+    });
+    montant.insert({tarificationCode: 'T2', formuleType: 'Semaine', montantForfaitaire: 450}, function () {
+
+    });
+    montant.insert({tarificationCode: 'T1', formuleType: 'Week-end', montantForfaitaire: 160}, function () {
+
+    });
+    montant.insert({tarificationCode: 'T2', formuleType: 'Week-end', montantForfaitaire: 160}, function () {
+
+    });
+
+    client.insert({prenom: 'Bernard', nom: 'Duchêne'}, function () {
+
+    });
+    client.insert({prenom: 'Monique', nom: 'Ale'}, function () {
+
+    });
+
+    reservation.insert({formuleType: 'Journée', vehiculeNumero: 1, clientId: 1, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
+
+    });
+    reservation.insert({formuleType: 'Journée', vehiculeNumero: 2, clientId: 1, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
+
+    });
+    reservation.insert({formuleType: 'Semaine', vehiculeNumero: 3, clientId: 2, etat: 'Supprimée', dateAnnulation: tomorow, nouvelleReservationNumero: null}, function () {
+
+    });
+    reservation.insert({formuleType: 'Week-end', vehiculeNumero: 3, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
+
+    });
+    reservation.insert({formuleType: 'Journée', vehiculeNumero: 2, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
+
+    });
+    reservation.update({numero: 1}, {etat: 'Annulée', nouvelleReservationNumero: 5}, function () {
+
+    });
+
+    location.insert({reservationNumero: 2, kilometrageDepart: 20000, dateDepart: today, paiementCaution: 1}, function () {
+
+    });
+    location.insert({reservationNumero: 4, kilometrageDepart: 50000, dateDepart: today, paiementCaution: 0}, function () {
+
+    });
+    location.insert({reservationNumero: 5, kilometrageDepart: 18000, dateDepart: today, paiementCaution: 1}, function () {
+
+    });
+
+    reception.insert({locationNumeroContrat: 2, kilometrageArrivee: 50050, dateArrivee: tomorow}, function () {
+
+    });
+    reception.insert({locationNumeroContrat: 3, kilometrageArrivee: 20050, dateArrivee: befTomorow}, function () {
+
+    });
+
+    facture.insert({locationNumeroContrat: 2}, function () {
+
+    });
+    facture.insert({locationNumeroContrat: 3}, function () {
+
+    });
 }, 2000);

@@ -33,8 +33,12 @@ router.get('/inscription', function(req, res) {
 
 router.post('/inscription', function (req, res) {
 	console.log(req.session.passport);
-	client.insert({prenom: req.body.prenom, nom: req.body.nom});
-	res.redirect('/client/inscription');
+	client.insert({prenom: req.body.prenom, nom: req.body.nom}, function (result) {
+		result.title = 'Result';
+		result.rel = 'Client';
+		result.user = req.session.passport.user;
+		res.render('result', result);
+	});
 });
 
 router.get('/reservation', function(req, res) {
@@ -78,8 +82,12 @@ router.get('/reservation-3', function (req, res) {
 router.post('/reservation-3', function (req, res) {
 	console.log(req.session.passport);
 	vehicule.getOne(req.body.vehicule, function (vehiculeId) {
-		reservation.insert({formuleType: req.body.formule, vehiculeNumero: vehiculeId, clientId: req.body.client, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null});
-		res.redirect('/');
+		reservation.insert({formuleType: req.body.formule, vehiculeNumero: vehiculeId, clientId: req.body.client, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null}, function (result) {
+			result.title = 'Result';
+			result.rel = 'Client';
+			result.user = req.session.passport.user;
+			res.render('result', result);
+		});
 	});
 });
 
@@ -95,8 +103,12 @@ router.get('/departure-1', function (req, res) {
 
 router.post('/departure-1', function (req, res) {
 	console.log(req.session.passport);
-	location.insert({reservationNumero: req.body.num, kilometrageDepart: req.body.kil, dateDepart: new Date(), paiementCaution: req.body.caution == 'paid'});
-	res.redirect('/');
+	location.insert({reservationNumero: req.body.num, kilometrageDepart: req.body.kil, dateDepart: new Date(), paiementCaution: req.body.caution == 'paid'}, function (result) {
+		result.title = 'Result';
+		result.rel = 'Client';
+		result.user = req.session.passport.user;
+		res.render('result', result);
+	});
 });
 
 router.get('/departure-2', function (req, res) {
@@ -106,8 +118,12 @@ router.get('/departure-2', function (req, res) {
 
 router.post('/departure-2', function (req, res) {
 	console.log(req.session.passport);
-	reservation.update({numero: req.body.num}, {etat: 'Annulée', nouvelleReservationNumero: req.body.new});
-	res.redirect('/');
+	reservation.update({numero: req.body.num}, {etat: 'Annulée', nouvelleReservationNumero: req.body.new}, function (result) {
+		result.title = 'Result';
+		result.rel = 'Client';
+		result.user = req.session.passport.user;
+		res.render('result', result);
+	});
 });
 
 router.get('/departure-3', function (req, res) {
@@ -117,8 +133,12 @@ router.get('/departure-3', function (req, res) {
 
 router.post('/departure-3', function (req, res) {
 	console.log(req.session.passport);
-	reservation.suppr(req.body.num);
-	res.redirect('/');
+	reservation.suppr(req.body.num, function (result) {
+		result.title = 'Result';
+		result.rel = 'Client';
+		result.user = req.session.passport.user;
+		res.render('result', result);
+	});
 });
 
 router.get('/return', function (req, res) {
@@ -128,9 +148,14 @@ router.get('/return', function (req, res) {
 
 router.post('/return', function (req, res) {
 	console.log(req.session.passport);
-	reception.insert({locationNumeroContrat: req.body.contrat, kilometrageArrivee: req.body.kil, dateArrivee: new Date()});
-	location.endRes(req.body.contrat);
-	res.redirect('/');
+	reception.insert({locationNumeroContrat: req.body.contrat, kilometrageArrivee: req.body.kil, dateArrivee: new Date()}, function () {
+		location.endRes(req.body.contrat, function (result) {
+			result.title = 'Result';
+			result.rel = 'Client';
+			result.user = req.session.passport.user;
+			res.render('result', result);
+		});
+	});
 });
 
 router.get('/payment', function (req, res) {

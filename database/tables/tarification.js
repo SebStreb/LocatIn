@@ -30,7 +30,7 @@ exports.getAll = function (callback) {
 	});
 };
 
-exports.insert = function (tarification) {
+exports.insert = function (tarification, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO \n" +
 		"Tarification(code, assuranceType, prixKilometre, amendeJournaliere) \n" +
@@ -38,6 +38,7 @@ exports.insert = function (tarification) {
 		connection.query(sql, tarification, function (err, result) {
 			if (err) console.error('INSERT TARIFICATION : ' + err.message);
 			console.log('INSERTED IN TARIFICATION');
+			callback({err: err, insert: true, table: 'Tarification'});
 		});
 	});
 };

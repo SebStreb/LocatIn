@@ -19,13 +19,14 @@ exports.create = function () {
 	});
 };
 
-exports.insert = function (assureur) {
+exports.insert = function (assureur, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO Assureur(prenom, nom) \n" +
 		"VALUES(:prenom, :nom)";
 		connection.query(sql, assureur, function (err, result, field) {
 			if (err) console.error('INSERT ASSUREUR : ' + err.message);
 			console.log('INSERTED IN ASSUREUR');
+			callback({err: err, insert: true, table: 'Assureur'});
 		});
 	});
 };

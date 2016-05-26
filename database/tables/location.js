@@ -22,24 +22,26 @@ exports.create = function () {
 	});
 };
 
-exports.endRes = function (numeroContrat) {
+exports.endRes = function (numeroContrat, callback) {
 	mysql(function (connection) {
 		var sql = "SELECT reservationNumero\n" +
 		"FROM Location\n" +
 		"WHERE numeroContrat = " + numeroContrat;
-		facture.insert({locationNumeroContrat: numeroContrat});
-		connection.query(sql, function (err, result) {
-			if (err) console.error('FINDRES LOCATION : ' + err.message);
-			sql = "UPDATE Reservation SET etat = 'Terminée'\n" +
-			"WHERE numero = " + result[0].reservationNumero;
-			connection.query(sql, function (err) {
-				if (err) console.error('ENDRES LOCATION : ' + err.message);
+		facture.insert({locationNumeroContrat: numeroContrat}, function (result) {
+			connection.query(sql, function (err, result2) {
+				if (err) console.error('FINDRES LOCATION : ' + err.message);
+				sql = "UPDATE Reservation SET etat = 'Terminée'\n" +
+				"WHERE numero = " + result2[0].reservationNumero;
+				connection.query(sql, function (err) {
+					if (err) console.error('ENDRES LOCATION : ' + err.message);
+					callback(result);
+				});
 			});
 		});
 	});
 };
 
-exports.insert = function (location) {
+exports.insert = function (location, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO\n" +
 		"Location(reservationNumero, kilometrageDepart, dateDepart, paiementCaution)\n" +
@@ -47,6 +49,7 @@ exports.insert = function (location) {
 		connection.query(sql, location, function (err, result) {
 			if (err) console.error('INSERT LOCATION : ' + err.message);
 			console.log('INSERTED ID ' + result.insertId + ' IN LOCATION');
+			callback({err: err, insert: true, table: 'Location', ID: result.insertId});
 		});
 	});
 };

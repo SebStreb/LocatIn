@@ -32,8 +32,12 @@ router.post('/vehicule', function (req, res) {
 	console.log(req.session.passport);
 	var marque = req.body.model.split(" ")[0];
 	var type = req.body.model.split(" ")[1];
-	vehicule.insert({modeleMarque: marque, modeleType: type});
-	res.redirect('/');
+	vehicule.insert({modeleMarque: marque, modeleType: type}, function (result) {
+		result.title = 'Result';
+		result.rel = 'Management';
+		result.user = req.session.passport.user;
+		res.render('result', result);
+	});
 });
 
 router.get('/vehicule-2', function (req, res) {
@@ -47,9 +51,14 @@ router.get('/vehicule-2', function (req, res) {
 
 router.post('/vehicule-2', function (req, res) {
 	console.log(req.session.passport);
-	modele.insert({marque: req.body.marque, type: req.body.type, optionCode: req.body.option, tarificationCode: req.body.tarification});
-	vehicule.insert({modeleMarque: req.body.marque, modeleType: req.body.type});
-	res.redirect('/');
+	modele.insert({marque: req.body.marque, type: req.body.type, optionCode: req.body.option, tarificationCode: req.body.tarification}, function () {
+		vehicule.insert({modeleMarque: req.body.marque, modeleType: req.body.type}, function (result) {
+			result.title = 'Result';
+			result.rel = 'Management';
+			result.user = req.session.passport.user;
+			res.render('result', result);
+		});
+	});
 });
 
 module.exports = router;

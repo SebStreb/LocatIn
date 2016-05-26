@@ -29,13 +29,14 @@ exports.getAll = function (callback) {
 	});
 };
 
-exports.insert = function (client) {
+exports.insert = function (client, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO Client(prenom, nom) \n" +
 		"VALUES(:prenom, :nom)";
 		connection.query(sql, client, function (err, result) {
 			if (err) console.error('INSERT CLIENT : ' + err.message);
 			console.log('INSERTED ID ' + result.insertId + ' IN CLIENT');
+			callback({err: err, insert: true, table: 'Client', ID: result.insertId});
 		});
 	});
 };

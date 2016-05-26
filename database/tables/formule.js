@@ -27,7 +27,7 @@ exports.getAll = function (callback) {
 	});
 };
 
-exports.insert = function (formule) {
+exports.insert = function (formule, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO\n" +
 		"Formule(type, kilometrageForfaitaire)\n" +
@@ -35,6 +35,7 @@ exports.insert = function (formule) {
 		connection.query(sql, formule, function (err, result) {
 			if (err) console.error('INSERT FORMULE : ' + err.message);
 			console.log('INSERTED IN FORMULE');
+			callback({err: err, insert: true, table: 'Formule'});
 		});
 	});
 };

@@ -19,7 +19,7 @@ exports.create = function () {
 	});
 };
 
-exports.insert = function (assureur) {
+exports.insert = function (assureur, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO\n" +
 		"Reception(locationNumeroContrat, kilometrageArrivee, dateArrivee)\n" +
@@ -27,6 +27,7 @@ exports.insert = function (assureur) {
 		connection.query(sql, assureur, function (err, result) {
 			if (err) console.error('INSERT RECEPTION : ' + err.message);
 			console.log('INSERTED IN RECEPTION');
+			callback({err: err, insert: true, table: 'Reception'});
 		});
 	});
 };

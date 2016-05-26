@@ -26,13 +26,14 @@ exports.getAll = function (callback) {
 	});
 };
 
-exports.insert = function (option) {
+exports.insert = function (option, callback) {
 	mysql(function (connection) {
 		var sql =
 		"INSERT IGNORE INTO Options(code, libelle) VALUES(:code, :libelle)";
 		connection.query(sql, option, function (err, result) {
 			if (err) console.error('INSERT OPTION : ' + err.message);
 			console.log('INSERTED IN OPTION');
+			callback({err: err, insert: true, table: 'Option'});
 		});
 	});
 };

@@ -33,7 +33,7 @@ exports.getAll = function (callback) {
 	});
 };
 
-exports.insert = function (modele) {
+exports.insert = function (modele, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO \n" +
 		"Modele(marque, type, optionCode, tarificationCode) \n" +
@@ -41,6 +41,7 @@ exports.insert = function (modele) {
 		connection.query(sql, modele, function (err, result) {
 			if (err) console.error('INSERT MODELE : ' + err.message);
 			console.log('INSERTED IN MODELE');
+			callback({err: err, insert: true, table: 'Modele'});
 		});
 	});
 };

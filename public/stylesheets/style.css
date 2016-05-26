@@ -26,9 +26,14 @@ footer{
 
 .glyphicon-form {
 	color: #222;
-	padding: 20px 125px;
-	text-align : right;
+	padding: 20px;
 	font-size: 10em;
+}
+
+.glyphicon-result {
+	color: #222;
+	padding: 20px;
+	font-size: 20em;
 }
 
 form {

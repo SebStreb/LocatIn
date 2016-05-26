@@ -17,7 +17,7 @@ exports.create = function () {
 	});
 };
 
-exports.insert = function (assurance) {
+exports.insert = function (assurance, callback) {
 	mysql(function (connection) {
 		var sql =
 		"INSERT IGNORE INTO Assurance(type, assureurPrenom, assureurNom)\n" +
@@ -25,6 +25,7 @@ exports.insert = function (assurance) {
 		connection.query(sql, assurance, function (err, result) {
 			if (err) console.error('INSERT ASSURANCE : ' + err.message);
 			console.log('INSERTED ASSURANCE');
+			callback({err: err, insert: true, table: 'Assurance'});
 		});
 	});
 };

@@ -16,13 +16,14 @@ exports.create = function () {
 	});
 };
 
-exports.insert = function (facture) {
+exports.insert = function (facture, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO Facture(locationNumeroContrat)\n" +
 		"VALUES(:locationNumeroContrat)";
 		connection.query(sql, facture, function (err, result) {
 			if (err) console.error('INSERT FACTURE : ' + err.message);
 			console.log('INSERTED ID ' + result.insertId + ' IN FACTURE');
+			callback({err: err, insert: true, table: 'Facture', ID: result.insertId});
 		});
 	});
 };

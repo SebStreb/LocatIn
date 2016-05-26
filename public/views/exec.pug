@@ -15,4 +15,5 @@ block content
 		else if results
 			p.text-center Query executed ! #{results.affectedRows} rows affected.
 		else
-			p.text-center Error in SQL. Check logs for message.
+			p.text-center Error in SQL :
+			p #{err}

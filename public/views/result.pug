@@ -1,0 +1,23 @@
+extends ./layout.pug
+
+block content
+	.container
+		.page-header
+			h1 Result
+		.row
+			.col-md-4
+				if err
+					h3 The database query returned a error :
+					h4 #{err}
+				else if insert && ID
+					h3 Query successful !
+					h4 Inserted ID #{ID} on table #{table}.
+				else if insert
+					h3 Query successful !
+					h4 Inserted element on table #{table}.
+				else
+					h3 Query successful !
+					h4 #{rows} rows affected on table #{table}.
+			.col-md-8
+				p.text-center
+					span.glyphicon.glyphicon-ok-sign.glyphicon-result

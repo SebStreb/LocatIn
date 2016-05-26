@@ -32,13 +32,14 @@ exports.getOne = function (modele, callback) {
 	});
 };
 
-exports.insert = function (vehicule) {
+exports.insert = function (vehicule, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO Vehicule(modeleMarque, modeleType) \n" +
 		"VALUES(:modeleMarque, :modeleType)";
 		connection.query(sql, vehicule, function (err, result) {
 			if (err) console.error('INSERT VEHICULE : ' + err.message);
 			console.log('INSERTED ID ' + result.insertId + ' IN VEHICULE');
+			callback({err: err, insert: true, table: 'Vehicule', ID: result.insertId});
 		});
 	});
 };
