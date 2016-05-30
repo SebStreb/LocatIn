@@ -67,7 +67,7 @@ html
 								a(href="/about") About #[span.glyphicon.glyphicon-info-sign]
 						ul.nav.navbar-nav.navbar-right
 							if user
-								p.navbar-text #[span.glyphicon.glyphicon-user] Signed in as #[a.navbar-link(href="/me")= user]
+								p.navbar-text #[span.glyphicon.glyphicon-user] Signed in as #{user}
 								li
 									a(href="/logout") Logout #[span.glyphicon.glyphicon-log-out]
 							else

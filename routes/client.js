@@ -9,6 +9,7 @@ var reservation = require('../database/tables/reservation.js');
 var location = require('../database/tables/location.js');
 var reception = require('../database/tables/reception.js');
 var vehicule = require('../database/tables/vehicule.js');
+var facture = require('../database/tables/facture.js');
 var queries = require('../database/queries.js');
 
 router.use(function (req, res, next) {
@@ -171,6 +172,21 @@ router.post('/payment', function (req, res) {
 		queries.getFact(req.body.client, function (results, fields) {
 			res.render('client/payment', {title: 'Payment', clients: clients, results: results, fields: fields, rel: 'Client', user: req.session.passport.user});
 		});
+	});
+});
+
+router.get('/payment-2', function (req, res) {
+	console.log(req.session.passport);
+	res.redirect('/client/payment');
+});
+
+router.post('/payment-2', function (req, res) {
+	console.log(req.session.passport);
+	facture.setPaid(req.body.pay, function (result) {
+		result.title = 'Result';
+		result.rel = 'Client';
+		result.user = req.session.passport.user;
+		res.render('result', result);
 	});
 });
 

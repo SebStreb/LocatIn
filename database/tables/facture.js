@@ -8,10 +8,22 @@ exports.create = function () {
 		"CREATE TABLE IF NOT EXISTS Facture(\n" +
 			"numero INT PRIMARY KEY AUTO_INCREMENT NOT NULL,\n" +
 			"locationNumeroContrat INT,\n" +
+			"etat VARCHAR(20) DEFAULT 'non-payé',\n" +
 			"FOREIGN KEY (locationNumeroContrat) REFERENCES Location(numeroContrat)\n" +
 		")";
 		connection.query(sql, function (err) {
 			if (err) console.error('CREATE FACTURE : ' + err.message);
+		});
+	});
+};
+
+exports.setPaid = function (numero, callback) {
+	mysql(function (connection) {
+		var sql =
+		"UPDATE Facture SET etat = 'payé' WHERE numero = " + numero;
+		connection.query(sql, function (err, result) {
+			if (err) console.error('SET PAID : ' + err.message);
+			callback({err: err, insert: false, table: 'Facture', rows: result.affectedRows});
 		});
 	});
 };

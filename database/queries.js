@@ -241,9 +241,11 @@ exports.getFact = function (cli, callback) {
 			"CONCAT(C.prenom, ' ', C.nom) AS 'Client',\n" +
 			"C.adresse AS 'Billing address',\n" +
 			"V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + " +
-			"V.fraisKmSupps - V.compensationAnnulation AS 'Total'\n" +
+			"V.fraisKmSupps - V.compensationAnnulation AS 'Total',\n" +
+			"F.etat AS 'State'\n" +
 		"FROM Client C\n" +
-		"LEFT JOIN VFacture V ON V.clientId = C.id\n" +
+		"RIGHT JOIN VFacture V ON V.clientId = C.id\n" +
+		"LEFT JOIN Facture F ON V.factureNumero = F.numero\n" +
 		"WHERE C.id = " + cli + "\n" +
 		"ORDER BY V.factureNumero DESC"
 		;

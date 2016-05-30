@@ -20,4 +20,17 @@ block content
 						.col-sm-offset-2.col-sm-10
 							input.btn.btn-default(type="submit", value="Search")
 		if results
-			+table
+			.table-responsive
+				table.table.table-striped
+					thead
+						tr
+							each field in fields
+								th #{field.name}
+					tbody
+						form.form-horizontal(role="form", method="post", action="/client/payment-2")
+							each result in results
+								tr
+									each value in result
+										td #{value}
+									td #[input(type="radio", name="pay", value=result['Bill Number'])]
+							input.btn.btn-default(type="submit", value="Pay")

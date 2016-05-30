@@ -47,7 +47,7 @@ router.get('/exec', function (req, res) {
 	if (req.session.passport.user != 'admin') {
 		res.redirect('/');
 	} else {
-		res.render('exec', {title: 'SQL', rel: 'Management', user: req.session.passport.user});
+		res.render('exec', {title: 'SQL', sql: '', rel: 'Management', user: req.session.passport.user});
 	}
 });
 
@@ -56,7 +56,7 @@ router.post('/exec', function (req, res) {
 		res.redirect('/');
 	} else {
 		user.exec(req.body.sql, function (results, fields, err) {
-			res.render('exec', {title: 'SQL', results: results, fields: fields, err: err, rel: 'Management', user: req.session.passport.user});
+			res.render('exec', {title: 'SQL', sql: req.body.sql, results: results, fields: fields, err: err, rel: 'Management', user: req.session.passport.user});
 		});
 	}
 })
