@@ -1,0 +1,67 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 Change prices
+		h3 Exceeded kilometer's price
+		form.form-horizontal(role="form", method="post", action="/management/prices-1")
+			.table-responsive
+				table.table.table-striped
+					thead
+						tr
+							th Pricing
+							th Actual Price
+							th Select
+					tbody
+						each result in result1
+							tr
+								each value in result
+									td #{value}
+								td #[input(type="radio", name="select", value=result['Code'])]
+			.row
+				.col-md-8
+					input.form-control(type="number", name="value", placeholder="New value")
+				.col-md-4
+					input.btn.btn-default(type="submit", value="Change")
+		h3 Exceeded day's price
+		form.form-horizontal(role="form", method="post", action="/management/prices-2")
+			.table-responsive
+				table.table.table-striped
+					thead
+						tr
+							th Pricing
+							th Actual Price
+							th Select
+					tbody
+						each result in result2
+							tr
+								each value in result
+									td #{value}
+								td #[input(type="radio", name="select", value=result['Code'])]
+			.row
+				.col-md-8
+					input.form-control(type="number", name="value", placeholder="New value")
+				.col-md-4
+					input.btn.btn-default(type="submit", value="Change")
+		h3 Formula's price
+		form.form-horizontal(role="form", method="post", action="/management/prices-3")
+			.table-responsive
+				table.table.table-striped
+					thead
+						tr
+							th Pricing
+							th Formula
+							th Actual Price
+							th Select
+					tbody
+						each result in result3
+							tr
+								each value in result
+									td #{value}
+								td #[input(type="radio", name="select", value=result['Code'] + " " + result['Formule'])]
+			.row
+				.col-md-8
+					input.form-control(type="number", name="value", placeholder="New value")
+				.col-md-4
+					input.btn.btn-default(type="submit", value="Change")

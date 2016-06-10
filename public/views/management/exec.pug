@@ -1,10 +1,10 @@
-extends ./layout.pug
+extends ../layout.pug
 
 block content
 	.container
 		.page-header
 			h1 Execute SQL
-		form.form-horizontal(role="form", method="post", action="/exec")
+		form.form-horizontal(role="form", method="post", action="/management/exec")
 			.form-group
 				textarea.form-control(name="sql", rows="12", cols="40", placeholder="SQL Query") #{sql}
 			.form-group

@@ -20,12 +20,56 @@ exports.create = function () {
 	});
 };
 
+exports.getPrixKil = function (callback) {
+	mysql(function (connection) {
+		var sql = "SELECT T.code as 'Code', prixKilometre as 'Kil'\n" +
+			"FROM Tarification T";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('GET TARIFICATION PRICES KILOMETRE : ' + err.message);
+			callback(result);
+		});
+	});
+};
+
+exports.getPrixJour = function (callback) {
+	mysql(function (connection) {
+		var sql = "SELECT T.code as 'Code', amendeJournaliere as 'Jour'\n" +
+			"FROM Tarification T";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('GET TARIFICATION PRICES JOUR : ' + err.message);
+			callback(result);
+		});
+	});
+};
+
 exports.getAll = function (callback) {
 	mysql(function (connection) {
 		var sql = "SELECT T.code as 'Code' FROM Tarification T";
 		connection.query(sql, function (err, result) {
 			if (err) console.error('SEARCH TARIFICATION : ' + err.message);
 			callback(result);
+		});
+	});
+};
+
+exports.setKil = function (tarification, value, callback) {
+	mysql(function (connection) {
+		var sql = "UPDATE Tarification SET prixKilometre = " + value + "\n" +
+			"WHERE code = '" + tarification + "'";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('UPDATE TARIFICATION KIL : ' + err.message);
+			callback({err: err, insert: false, table: 'Tarification', rows: result.affectedRows});
+		});
+	});
+};
+
+exports.setJour = function (tarification, value, callback) {
+	mysql(function (connection) {
+		var sql = "UPDATE Tarification SET amendeJournaliere = " + value + "\n" +
+			"WHERE code = '" + tarification + "'";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('UPDATE TARIFICATION JOUR : ' + err.message);
+			callback({err: err, insert: false, table: 'Tarification', rows: result.affectedRows});
 		});
 	});
 };
