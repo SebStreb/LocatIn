@@ -18,10 +18,6 @@ router.use(function (req, res, next) {
 		res.redirect('/');
 });
 
-router.get('/', function(req, res) {
-	res.render('management/index', {title: 'Management', rel: 'Management', user: req.session.passport.user});
-});
-
 router.get('/vehicule', function (req, res) {
 	modele.getAll(function (results) {
 		res.render('management/vehicule', {title: 'Vehicule', results: results, rel: 'Management', user: req.session.passport.user});

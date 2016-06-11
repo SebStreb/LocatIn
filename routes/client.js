@@ -22,10 +22,6 @@ router.use(function (req, res, next) {
 		res.redirect('/');
 });
 
-router.get('/', function(req, res) {
-	res.render('client/index', {title: 'Client', rel: 'Client', user: req.session.passport.user});
-});
-
 router.get('/inscription', function(req, res) {
 	res.render('client/inscription', {title: 'Inscription', rel: 'Client', user: req.session.passport.user});
 });

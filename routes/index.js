@@ -5,7 +5,13 @@ var router = express.Router();
 var user = require('../database/user.js');
 
 router.use(function (req, res, next) {
-	console.log(req.session.passport);
+	if (req.session.passport) {
+		if (!req.session.passport.user)
+			console.log("User : disconnected");
+		else
+			console.log("USER : " + req.session.passport.user);
+	} else
+		console.log("USER : not connected");
 	next();
 });
 
@@ -38,11 +44,16 @@ router.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
-router.post('/login', passport.authenticate('local',
-		{ successRedirect: '/',
-			failureRedirect: '/login',
-		}
-	)
-);
+router.post('/login', function (req, res, next) {
+	passport.authenticate('local', function(err, user, info) {
+		if (err) return next(err);
+		if (!user)
+			return res.render('login', {title: 'Login', rel: 'Login', message: info.message});
+		req.logIn(user, function(err) {
+			if (err) return next(err);
+			return res.redirect('/');
+		});
+	})(req, res, next);
+});
 
 module.exports = router;

@@ -8,6 +8,8 @@ block content
 			.col-md-4
 				p.text-center
 					span.glyphicon.glyphicon-lock.glyphicon-form
+					if message
+						.alert.alert-danger Could not connect : #{message}
 			.col-md-8
 				form.form-horizontal(role="form", method="post", action="/login")
 					.form-group
