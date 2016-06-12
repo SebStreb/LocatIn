@@ -16,36 +16,36 @@ block content
 			.col-md-8
 				form.form-horizontal(role="form", method="post", action="/client/reservation-2")
 					.form-group
-						label.control-label.col-sm-2(for="cli") Client :
-						.col-sm-10
+						label.control-label.col-sm-4(for="cli") Client :
+						.col-sm-8
 							select#cli.form-control(name="client")
 								each row in result1
 									option(value=row.ID) #{row.Client}
 					.form-group
-						label.control-label.col-sm-2(for="vhc") Vehicule :
-						.col-sm-5
+						label.control-label.col-sm-4(for="vhc") Vehicule :
+						.col-sm-4
 							select#vhc.form-control(name="modele")
 								option(value="") None
 								each row in result2
 									option(value=row.Modele) #{row.Modele}
-						.col-sm-5
+						.col-sm-4
 							select#vhc.form-control(name="option")
 								option(value="") None
 								each row in result3
 									option(value=row.Code) #{row.Libelle}
 					.form-group
-						label.control-label.col-sm-2(for="for") Formule :
-						.col-sm-10
+						label.control-label.col-sm-4(for="for") Formule :
+						.col-sm-8
 							select#for.form-control(name="formule")
 								each row in result4
 									option(value=row.Type) #{row.Type}
 					.form-group
-						label.control-label.col-sm-2(for="dep") Departure :
-						.col-sm-10
+						label.control-label.col-sm-4(for="dep") Departure :
+						.col-sm-8
 							.input-group.date(data-provide="datepicker", data-date-week-start=1, data-date-start-date="today", data-date-format="yyyy-mm-dd")
 								input#dep.form-control(type="text", name="departure", placeholder="Departure")
 								.input-group-addon
 									span.glyphicon.glyphicon-th
 					.form-group
-						.col-sm-offset-2.col-sm-10
+						.col-sm-offset-4.col-sm-8
 							input.btn.btn-default(type="submit", value="Search")

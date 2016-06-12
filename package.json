@@ -4,7 +4,8 @@
   "description": "Information System website using Node.js and SQLite",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "install": "node install.js"
   },
   "repository": {
     "type": "git",

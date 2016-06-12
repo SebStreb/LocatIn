@@ -11,24 +11,26 @@ block content
 			.col-md-8
 				form.form-horizontal(role="form", method="post", action="/management/vehicule-2")
 					.form-group
-						label.control-label.col-sm-2(for="brand") Brand :
-						.col-sm-10
+						label.control-label.col-sm-4(for="brand") Brand :
+						.col-sm-8
 							input#brand.form-control(type="text", name="marque", placeholder="Brand")
 					.form-group
-						label.control-label.col-sm-2(for="breed") Breed :
-						.col-sm-10
+						label.control-label.col-sm-4(for="breed") Breed :
+						.col-sm-8
 							input#breed.form-control(type="text", name="type", placeholder="Breed")
 					.form-group
-						label.control-label.col-sm-2(for="opt") Options :
+						label.control-label.col-sm-4(for="opt") Options :
 						.col-sm-4
 							select#opt.form-control(name="option")
 								each row in results1
 									option(value=row.Code) #{row.Libelle}
-						label.control-label.col-sm-2(for="tarif") Pricing :
-						.col-sm-4
+						label.control-label.col-sm-2(for="tarif") Rate :
+						.col-sm-2
 							select#tarif.form-control(name="tarification")
 								each row in results2
 									option(value=row.code) #{row.Code}
 					.form-group
-						.col-sm-offset-2.col-sm-5
+						.col-sm-offset-4.col-sm-4
 							input.btn.btn-default(type="submit", value="Add")
+						.col-sm-4
+							a.btn.btn-default(href="/management/vehicule") Existing model

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+var assurance = require('../database/tables/assurance.js');
 var vehicule = require('../database/tables/vehicule.js');
 var modele = require('../database/tables/modele.js');
 var option = require('../database/tables/option.js');
@@ -10,7 +11,7 @@ var user = require('../database/user.js');
 
 router.use(function (req, res, next) {
 	if (req.session.passport) {
-		if (!req.session.passport.user)
+		if (req.session.passport.user !== 'admin')
 			res.redirect('/');
 		else
 			next();
@@ -51,6 +52,44 @@ router.post('/vehicule-2', function (req, res) {
 			result.user = req.session.passport.user;
 			res.render('result', result);
 		});
+	});
+});
+
+router.get('/rate', function (req, res) {
+	assurance.getAll(function (result) {
+		res.render('management/tarification', {title: ' New rate', results: result, rel: 'Management', user: req.session.passport.user});
+	});
+});
+
+router.post('/rate', function (req, res) {
+	tarification.insert({code: req.body.rate, assuranceType: req.body.insurance, prixKilometre: req.body.kil, amendeJournaliere: req.body.jour}, function (result) {
+		montant.insert({tarificationCode: req.body.rate, formuleType: 'Journée', montantForfaitaire: req.body.journee}, function () {
+			montant.insert({tarificationCode: req.body.rate, formuleType: 'Semaine', montantForfaitaire: req.body.week}, function () {
+				montant.insert({tarificationCode: req.body.rate, formuleType: 'Week-end', montantForfaitaire: req.body.we}, function () {
+					result.title = 'Result';
+					result.rel = 'Management';
+					result.user = req.session.passport.user;
+					res.render('result', result);
+				});
+			});
+		});
+	});
+});
+
+router.get('/rate-2', function (req, res) {
+	modele.getAll(function (result1) {
+		tarification.getAll(function (result2) {
+			res.render('management/change', {title: 'Change rate', result1: result1, result2: result2, rel: 'Management', user: req.session.passport.user});
+		});
+	});
+});
+
+router.post('/rate-2', function (req, res) {
+	modele.changeTarif(req.body.model, req.body.rate, function (result) {
+		result.title = 'Result';
+		result.rel = 'Management';
+		result.user = req.session.passport.user;
+		res.render('result', result);
 	});
 });
 

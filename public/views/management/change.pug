@@ -1,0 +1,27 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 Change rate
+		.row
+			.col-md-4
+				p.text-center
+					span.glyphicon.glyphicon-random.glyphicon-form
+			.col-md-8
+				form.form-horizontal(role="form", method="post", action="/management/rate-2")
+					.form-group
+						label.control-label.col-sm-4(for="model") Model :
+						.col-sm-8
+							select#model.form-control(name="model")
+								each row in result1
+									option(value=row.Modele) #{row.Modele}
+					.form-group
+						label.control-label.col-sm-4(for="tarif") New rate :
+						.col-sm-8
+							select#tarif.form-control(name="rate")
+								each row in result2
+									option(value=row.Code) #{row.Code}
+					.form-group
+						.col-sm-offset-4.col-sm-8
+							input.btn.btn-default(type="submit", value="Change")

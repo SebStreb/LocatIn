@@ -1,0 +1,43 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 New rate
+		.row
+			.col-md-4
+				p.text-center
+					span.glyphicon.glyphicon-usd.glyphicon-form
+			.col-md-8
+				form.form-horizontal(role="form", method="post", action="/management/rate")
+					.form-group
+						label.control-label.col-sm-4(for="code") Rate code :
+						.col-sm-8
+							input#code.form-control(type="text", name="rate", placeholder="Rate code")
+					.form-group
+						label.control-label.col-sm-4(for="ins") Insurance mode :
+						.col-sm-8
+							select#ins.form-control(name="insurance")
+								each row in results
+									option(value=row.type) #{row.type}
+					.form-group
+						label.control-label.col-sm-4(for="journ") Price for a day :
+						.col-sm-8
+							input#journ.form-control(type="number", name="journee", placeholder="Price for a day")
+						label.control-label.col-sm-4(for="week") Price for a week :
+						.col-sm-8
+							input#week.form-control(type="number", name="week", placeholder="Price for a week")
+						label.control-label.col-sm-4(for="we") Price for a week-end :
+						.col-sm-8
+							input#we.form-control(type="number", name="we", placeholder="Price for a week-end")
+					.form-group
+						label.control-label.col-sm-4(for="kil") Exceeded kilometer's price :
+						.col-sm-8
+							input#kil.form-control(type="number", name="kil", placeholder="Exceeded kilometer")
+					.form-group
+						label.control-label.col-sm-4(for="jour") Exceeded day's price :
+						.col-sm-8
+							input#jour.form-control(type="number", name="jour", placeholder="Exceeded day")
+					.form-group
+						.col-sm-offset-4.col-sm-8
+							input.btn.btn-default(type="submit", value="Add")

@@ -33,6 +33,19 @@ exports.getAll = function (callback) {
 	});
 };
 
+exports.changeTarif = function (modele, tarification, callback) {
+	var marque = modele.split(" ")[0];
+	var type = modele.split(" ")[1];
+	mysql(function (connection) {
+		var sql = "UPDATE Modele SET tarificationCode = '" + tarification + "'\n" +
+		"WHERE marque = '" + marque + "' AND type = '" + type + "'";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('UPDATE MODELE : ' + err.message);
+			callback({err: err, insert: false, table: 'Modele', rows: result.affectedRows});
+		});
+	});
+};
+
 exports.insert = function (modele, callback) {
 	mysql(function (connection) {
 		var sql = "INSERT IGNORE INTO \n" +

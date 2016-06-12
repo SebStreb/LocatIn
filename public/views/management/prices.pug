@@ -10,7 +10,7 @@ block content
 				table.table.table-striped
 					thead
 						tr
-							th Pricing
+							th Rate
 							th Actual Price
 							th Select
 					tbody
@@ -20,9 +20,9 @@ block content
 									td #{value}
 								td #[input(type="radio", name="select", value=result['Code'])]
 			.row
-				.col-md-8
+				.col-md-2
 					input.form-control(type="number", name="value", placeholder="New value")
-				.col-md-4
+				.col-md-10
 					input.btn.btn-default(type="submit", value="Change")
 		h3 Exceeded day's price
 		form.form-horizontal(role="form", method="post", action="/management/prices-2")
@@ -30,7 +30,7 @@ block content
 				table.table.table-striped
 					thead
 						tr
-							th Pricing
+							th Rate
 							th Actual Price
 							th Select
 					tbody
@@ -40,9 +40,9 @@ block content
 									td #{value}
 								td #[input(type="radio", name="select", value=result['Code'])]
 			.row
-				.col-md-8
+				.col-md-2
 					input.form-control(type="number", name="value", placeholder="New value")
-				.col-md-4
+				.col-md-10
 					input.btn.btn-default(type="submit", value="Change")
 		h3 Formula's price
 		form.form-horizontal(role="form", method="post", action="/management/prices-3")
@@ -50,7 +50,7 @@ block content
 				table.table.table-striped
 					thead
 						tr
-							th Pricing
+							th Rate
 							th Formula
 							th Actual Price
 							th Select
@@ -61,7 +61,7 @@ block content
 									td #{value}
 								td #[input(type="radio", name="select", value=result['Code'] + " " + result['Formule'])]
 			.row
-				.col-md-8
+				.col-md-2
 					input.form-control(type="number", name="value", placeholder="New value")
-				.col-md-4
+				.col-md-10
 					input.btn.btn-default(type="submit", value="Change")

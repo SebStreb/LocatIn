@@ -17,6 +17,17 @@ exports.create = function () {
 	});
 };
 
+exports.getAll = function (callback) {
+	mysql(function (connection) {
+		var sql =
+		"SELECT type FROM Assurance\n";
+		connection.query(sql, function (err, result) {
+			if (err) console.error('GET ASSURANCE : ' + err.message);
+			callback(result);
+		});
+	});
+};
+
 exports.insert = function (assurance, callback) {
 	mysql(function (connection) {
 		var sql =

@@ -55,13 +55,14 @@ html
 									li #[a(href="/reports/reservations")= "Reservations"]
 									li #[a(href="/reports/locations")= "Locations"]
 									li #[a(href="/reports/history")= "History"]
-							li.dropdown(class=(user) ? "abled" : "disabled", class=(rel === 'Management') ? "active" : "notactive")
+							li.dropdown(class=(user === 'admin') ? "abled" : "disabled", class=(rel === 'Management') ? "active" : "notactive")
 								a.dropdown-toggle(href="/management", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") Management #[span.caret]
 								ul.dropdown-menu
 									li #[a(href="/management/vehicule")= "New vehicule"]
+									li #[a(href="/management/rate")= "New rate"]
+									li #[a(href="/management/rate-2")= "Change rate"]
 									li #[a(href="/management/prices")= "Prices"]
-									if (user === 'admin')
-										li #[a(href="/management/exec")= "SQL"]
+									li #[a(href="/management/exec")= "SQL"]
 							li(class=(rel === 'About') ? "active" : "notactive")
 								a(href="/about") About #[span.glyphicon.glyphicon-info-sign]
 						ul.nav.navbar-nav.navbar-right
