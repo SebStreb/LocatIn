@@ -28,8 +28,8 @@ befTomorow.setHours(today.getHours() + 28);
 
 var connection = sql.createConnection({
     host     : 'localhost',
-    user     : 'root',
-    password : 'root'
+    user     : 'b1bb440ebb3969',
+    password : '74aea619'
 });
 connection.connect(function(err) {
     if (err) console.error('CONNECT ERROR : ' + err.code);
