@@ -43,7 +43,7 @@ exports.insert = function (client, callback) {
 
 exports.destroy = function () {
 	mysql(function (connection) {
-		var sql = "DROP TABLE IF EXISTS Assureur";
+		var sql = "DROP TABLE IF EXISTS Client";
 		connection.query(sql, function (err) {
 			if (err) console.error('DESTROY CLIENT : ' + err.message);
 		});

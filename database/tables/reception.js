@@ -8,7 +8,7 @@ exports.create = function () {
 		"CREATE TABLE IF NOT EXISTS Reception(\n" +
 			"locationNumeroContrat INT PRIMARY KEY NOT NULL,\n" +
 			"kilometrageArrivee FLOAT NOT NULL,\n" +
-			"dateArrivee DATETIME DEFAULT NOW(),\n" +
+			"dateArrivee TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n" +
 			"dommage VARCHAR(50),\n" +
 			"FOREIGN KEY (locationNumeroContrat) REFERENCES Location(numeroContrat),\n" +
 			"CHECK (kilometrageArrivee > 0)\n" +

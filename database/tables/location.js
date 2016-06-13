@@ -10,7 +10,7 @@ exports.create = function () {
 			"numeroContrat INT PRIMARY KEY AUTO_INCREMENT NOT NULL,\n" +
 			"reservationNumero INT NOT NULL,\n" +
 			"kilometrageDepart FLOAT NOT NULL,\n" +
-			"dateDepart DATETIME DEFAULT NOW(),\n" +
+			"dateDepart TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n" +
 			"numeroPermis VARCHAR(10),\n" +
 			"paiementCaution TINYINT DEFAULT 1,\n" +
 			"FOREIGN KEY (reservationNumero) REFERENCES Reservation(numero),\n" +

@@ -43,6 +43,22 @@ connection.query("CREATE DATABASE LocatIn", function (err) {
 connection.end();*/
 
 setTimeout(function () {
+    user.destroy();
+    view.destroy();
+    facture.destroy();
+    reception.destroy();
+    location.destroy();
+    reservation.destroy();
+    client.destroy();
+    montant.destroy();
+    formule.destroy();
+    vehicule.destroy();
+    modele.destroy();
+    option.destroy();
+    tarification.destroy();
+    assurance.destroy();
+    assureur.destroy();
+
     user.create();
     assureur.create();
     assurance.create();
@@ -153,43 +169,43 @@ setTimeout(function () {
     reservation.insert({formuleType: 'Journée', vehiculeNumero: 1, clientId: 1, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
         nbinserted++;
     });
-    reservation.insert({formuleType: 'Journée', vehiculeNumero: 2, clientId: 1, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
+    reservation.insert({formuleType: 'Journée', vehiculeNumero: 11, clientId: 1, etat: 'Effectif', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
         nbinserted++;
     });
-    reservation.insert({formuleType: 'Semaine', vehiculeNumero: 3, clientId: 2, etat: 'Supprimée', dateAnnulation: tomorow, nouvelleReservationNumero: null}, function () {
+    reservation.insert({formuleType: 'Semaine', vehiculeNumero: 21, clientId: 11, etat: 'Supprimée', dateAnnulation: tomorow, nouvelleReservationNumero: null}, function () {
         nbinserted++;
     });
-    reservation.insert({formuleType: 'Week-end', vehiculeNumero: 3, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
+    reservation.insert({formuleType: 'Week-end', vehiculeNumero: 21, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
         nbinserted++;
     });
-    reservation.insert({formuleType: 'Journée', vehiculeNumero: 2, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
+    reservation.insert({formuleType: 'Journée', vehiculeNumero: 11, clientId: 1, etat: 'Terminée', dateAnnulation: null, nouvelleReservationNumero: null}, function () {
         nbinserted++;
     });
-    reservation.update({numero: 1}, {etat: 'Annulée', nouvelleReservationNumero: 5}, function () {
-        nbinserted++;
-    });
-
-    location.insert({reservationNumero: 2, kilometrageDepart: 20000, dateDepart: today, paiementCaution: 1}, function () {
-        nbinserted++;
-    });
-    location.insert({reservationNumero: 4, kilometrageDepart: 50000, dateDepart: today, paiementCaution: 0}, function () {
-        nbinserted++;
-    });
-    location.insert({reservationNumero: 5, kilometrageDepart: 18000, dateDepart: today, paiementCaution: 1}, function () {
+    reservation.update({numero: 1}, {etat: 'Annulée', nouvelleReservationNumero: 41}, function () {
         nbinserted++;
     });
 
-    reception.insert({locationNumeroContrat: 2, kilometrageArrivee: 50050, dateArrivee: tomorow}, function () {
+    location.insert({reservationNumero: 11, kilometrageDepart: 20000, dateDepart: today, paiementCaution: 1}, function () {
         nbinserted++;
     });
-    reception.insert({locationNumeroContrat: 3, kilometrageArrivee: 20050, dateArrivee: befTomorow}, function () {
+    location.insert({reservationNumero: 31, kilometrageDepart: 50000, dateDepart: today, paiementCaution: 0}, function () {
+        nbinserted++;
+    });
+    location.insert({reservationNumero: 41, kilometrageDepart: 18000, dateDepart: today, paiementCaution: 1}, function () {
         nbinserted++;
     });
 
-    facture.insert({locationNumeroContrat: 2}, function () {
+    reception.insert({locationNumeroContrat: 11, kilometrageArrivee: 50050, dateArrivee: tomorow}, function () {
         nbinserted++;
     });
-    facture.insert({locationNumeroContrat: 3}, function () {
+    reception.insert({locationNumeroContrat: 21, kilometrageArrivee: 20050, dateArrivee: befTomorow}, function () {
+        nbinserted++;
+    });
+
+    facture.insert({locationNumeroContrat: 11}, function () {
+        nbinserted++;
+    });
+    facture.insert({locationNumeroContrat: 21}, function () {
         nbinserted++;
         if (nbinserted === 40) process.exit(0);
     });

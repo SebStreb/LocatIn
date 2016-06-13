@@ -10,8 +10,8 @@ exports.create = function () {
 			"formuleType VARCHAR(20) NOT NULL,\n" +
 			"vehiculeNumero INT NOT NULL,\n" +
 			"clientId INT NOT NULL,\n" +
-			"dateEffectuee DATETIME DEFAULT NOW(),\n" +
-			"dateDemandee DATETIME DEFAULT NOW(),\n" +
+			"dateEffectuee TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n" +
+			"dateDemandee DATETIME,\n" +
 			"disponibiliteReelle TINYINT DEFAULT 1,\n" +
 			"etat VARCHAR(50),\n" +
 			"dateAnnulation DATETIME,\n" +

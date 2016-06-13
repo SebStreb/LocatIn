@@ -9,7 +9,7 @@ exports.create = function () {
 			"numero INT PRIMARY KEY AUTO_INCREMENT NOT NULL, \n" +
 			"modeleMarque VARCHAR(20) NOT NULL, \n" +
 			"modeleType VARCHAR(20) NOT NULL, \n" +
-			"dateAchat DATETIME DEFAULT NOW(), \n" +
+			"dateAchat TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \n" +
 			"prixAchat FLOAT DEFAULT 15000.0, \n" +
 			"dateRestitution DATETIME, \n" +
 			"FOREIGN KEY (modeleMarque, modeleType) REFERENCES Modele(marque, type), \n" +
