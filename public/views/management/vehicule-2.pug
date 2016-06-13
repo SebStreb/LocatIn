@@ -22,6 +22,7 @@ block content
 						label.control-label.col-sm-4(for="opt") Options :
 						.col-sm-4
 							select#opt.form-control(name="option")
+								option(value="new") New Options
 								each row in results1
 									option(value=row.Code) #{row.Libelle}
 						label.control-label.col-sm-2(for="tarif") Rate :
@@ -29,6 +30,12 @@ block content
 							select#tarif.form-control(name="tarification")
 								each row in results2
 									option(value=row.code) #{row.Code}
+					.form-group
+						label.control-label.col-sm-4(for="nopt") New options :
+						.col-sm-3
+							input#nopt.form-control(type="text", name="code", placeholder="New option code")
+						.col-md-5
+							input#nopt.form-control(type="text", name="libelle", placeholder="New option label")
 					.form-group
 						.col-sm-offset-4.col-sm-4
 							input.btn.btn-default(type="submit", value="Add")

@@ -25,7 +25,7 @@ exports.exec = function (sql, callback) {
 	});
 };
 
-exports.insert = function (user) {
+exports.insert = function (user, callback) {
 	mysql(function (connection) {
 		var sql =
 		"INSERT IGNORE INTO User(username, password) \n" +
@@ -33,6 +33,7 @@ exports.insert = function (user) {
 		connection.query(sql, user, function (err, result) {
 			if (err) console.error('INSERT USER : ' + err.message);
 			console.log('INSERTED ID ' + result.insertId + ' IN USER');
+			callback({err: err, insert: true, table: 'User', ID: result.insertId})
 		});
 	});
 };

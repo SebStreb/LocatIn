@@ -1,0 +1,29 @@
+extends ../layout.pug
+
+block content
+	.container
+		.page-header
+			h1 New user
+		.row
+			.col-md-4
+				p.text-center
+					span.glyphicon.glyphicon-user.glyphicon-form
+					if message
+						.alert.alert-danger #{message}
+			.col-md-8
+				form.form-horizontal(role="form", method="post", action="/management/user")
+					.form-group
+						label.control-label.col-sm-4(for="username") Username :
+						.col-sm-8
+							input#username.form-control(type="text", name="username", placeholder="Username")
+					.form-group
+						label.control-label.col-sm-4(for="password") Password :
+						.col-sm-8
+							input#password.form-control(type="password", name="password", placeholder="Password")
+					.form-group
+						label.control-label.col-sm-4(for="confirm") Confirm password :
+						.col-sm-8
+							input#confirm.form-control(type="password", name="confirm", placeholder="Confirm Password")
+					.form-group
+						.col-sm-offset-4.col-sm-8
+							input.btn.btn-default(type="submit", value="Add")

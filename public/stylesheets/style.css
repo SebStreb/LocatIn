@@ -39,3 +39,7 @@ footer{
 form {
 	padding: 50px 50px;
 }
+
+.alert {
+	text-align : center;
+}

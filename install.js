@@ -86,7 +86,7 @@ setTimeout(function () {
     option.insert({code: 'O1', libelle: 'Break - 5 portes'}, function () {
         nbinserted++;
     });
-    option.insert({code: 'O2', libelle: 'Berlines - 5 portes'}, function () {
+    option.insert({code: 'O2', libelle: 'Berline - 5 portes'}, function () {
         nbinserted++;
     });
 
@@ -191,6 +191,6 @@ setTimeout(function () {
     });
     facture.insert({locationNumeroContrat: 3}, function () {
         nbinserted++;
-        if (nbinserted === 38) process.exit(0);
+        if (nbinserted === 40) process.exit(0);
     });
 }, 2000);

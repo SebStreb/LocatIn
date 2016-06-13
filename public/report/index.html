@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="prism.css">
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="prism.js"></script>
+		<title>LocatIn | Rapport</title>
+	</head>
+	<body id="top" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+		 	<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#top">Sébastien Strebelle</a>
+				</div>
+				<div class="collapse navbar-collapse" id="navbar">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#intro">Introduction</a></li>
+						<li><a href="#bdd">Modélisation</a></li>
+						<li><a href="#site">Implémentation</a></li>
+						<li><a href="#req">Requêtes</a></li>
+						<li><a href="#ccl">Conclusion</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="jumbotron text-center">
+			<div class="page-header">
+				<h1>Rapport de projet</h1>
+			</div>
+			<h2>Conception d'un Système d'Information - <strong>LocatIn</strong></h2>
+			<h4><a href="http://localhost:3000">Lien vers l'application</a></h4>
+			<h3>Avril-Mai 2016</h3>
+		</div>
+
+		<div class="container" id="intro">
+			<div class="page-header">
+				<h1>Introduction</h1>
+			</div>
+
+			<p>
+				Dans le cadre du cours <em>LINGE1322 - Analyse et Conception de systèmes d'informations</em>, il nous a été demandé de concevoir une base de données pour une société de location de voitures. Ce rapport décrit les différentes étapes de l'analyse, la conception et enfin l'implémentation d'un système d'information complet pour ce client.
+			</p>
+
+		</div>
+
+		<div class="container" id="bdd">
+			<div class="page-header">
+				<h1>Modélisation de la base de données</h1>
+			</div>
+
+			<p>
+				La première étape de la conception de ce système d'information a été l'analyse du cas d'étude. Celui-ci décrit l'organisation des données d'une société de location de voitures. Après l'analyse approfondie du cas d'étude, j'ai modélisé ces données au moyen d'un schéma entité-association. J'ai ensuite pu traduire ce modèle en un schéma relationnel de base de données.
+			</p>
+
+			<div class="row">
+				<div class="col-md-4">
+					<h6>Modèle Entité-Association</h6>
+					<a class="thumbnail" href="CaseStudy-EAmodel.png">
+						<img src="CaseStudy-EAmodel.png" alt="Modèle Entité-Association" />
+					</a>
+				</div>
+				<div class="col-md-8">
+					<h6>Modèle Relationnel</h6>
+					<a class="thumbnail" href="CaseStudy-RelationalBDD.png">
+						<img src="CaseStudy-RelationalBDD.png" alt="Modèle Relationnel" />
+					</a>
+				</div>
+			</div>
+
+			<p>
+				Après avoir modélisé le cas d'étude en graphique, l'étape suivante était de traduire ces modèles en une base de données relationnelle. Pour cette base de données, j'avais à l'origine choisi d'utilier <em>SQLite</em>. Néanmoins, ce type de base de données est parfois limité et j'ai eu plusieurs problèmes lors de l'intégration au site web. J'ai alors choisi porter ma base de données en <em>MySQL</em>.
+			</p>
+
+			<h4>Création des tables de la base de données</h4>
+			<pre class="language-sql line-numbers pre-scrollable"><code>
+				CREATE TABLE IF NOT EXISTS Assureur(
+					prenom VARCHAR(20) NOT NULL,
+					nom VARCHAR(20) NOT NULL,
+					adresse VARCHAR(60),
+					telephone VARCHAR(10),
+					fax VARCHAR(10),
+					PRIMARY KEY(prenom, nom)
+				);
+
+				CREATE TABLE IF NOT EXISTS Assurance(
+					type VARCHAR(20) PRIMARY KEY NOT NULL,
+					assureurPrenom VARCHAR(20) NOT NULL,
+					assureurNom VARCHAR(20) NOT NULL,
+					FOREIGN KEY (assureurPrenom, assureurNom) REFERENCES Assureur(prenom, nom)
+				);
+
+				CREATE TABLE IF NOT EXISTS Options(
+					code CHAR(2) PRIMARY KEY NOT NULL,
+					libelle VARCHAR(20) NOT NULL
+				);
+
+				CREATE TABLE IF NOT EXISTS Tarification(
+					code CHAR(2) PRIMARY KEY NOT NULL,
+					assuranceType VARCHAR(20) NOT NULL,
+					prixKilometre FLOAT NOT NULL,
+					amendeJournaliere FLOAT NOT NULL,
+					FOREIGN KEY (assuranceType) REFERENCES Assurance(type),
+					CHECK (prixKilometre > 0),
+					CHECK (amendeJournaliere > 0)
+				);
+
+				CREATE TABLE IF NOT EXISTS Modele(
+					marque VARCHAR(20) NOT NULL,
+					type VARCHAR(20) NOT NULL,
+					optionCode CHAR(2) NOT NULL,
+					tarificationCode CHAR(2) NOT NULL,
+					puissance FLOAT DEFAULT 150.0,
+					PRIMARY KEY (marque, type),
+					FOREIGN KEY (optionCode) REFERENCES Options(code),
+					FOREIGN KEY (tarificationCode) REFERENCES Tarification(code),
+					CHECK (puissance > 0)
+				);
+
+				CREATE TABLE IF NOT EXISTS Vehicule(
+					numero INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+					modeleMarque VARCHAR(20) NOT NULL,
+					modeleType VARCHAR(20) NOT NULL,
+					dateAchat DATETIME DEFAULT NOW(),
+					prixAchat FLOAT DEFAULT 15000.0,
+					dateRestitution DATETIME,
+					FOREIGN KEY (modeleMarque, modeleType) REFERENCES Modele(marque, type),
+					CHECK (prixAchat > 0)
+				);
+
+				CREATE TABLE IF NOT EXISTS Formule(
+					type VARCHAR(20) PRIMARY KEY NOT NULL,
+					kilometrageForfaitaire FLOAT NOT NULL,
+					CHECK (kilometrageForfaitaire > 0)
+				);
+
+				CREATE TABLE IF NOT EXISTS Montant(
+					tarificationCode CHAR(2) NOT NULL,
+					formuleType VARCHAR(20) NOT NULL,
+					montantForfaitaire FLOAT NOT NULL,
+					PRIMARY KEY (tarificationCode, formuleType),
+					FOREIGN KEY (tarificationCode) REFERENCES Tarification(code),
+					FOREIGN KEY (formuleType) REFERENCES Formule(type),
+					CHECK (montantForfaitaire > 0)
+				);
+
+				CREATE TABLE IF NOT EXISTS Client(
+					id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+					prenom VARCHAR(20) NOT NULL,
+					nom VARCHAR(20) NOT NULL,
+					adresse VARCHAR(60),
+					telephone VARCHAR(10)
+				);
+
+				CREATE TABLE IF NOT EXISTS Reservation(
+					numero INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+					formuleType VARCHAR(20) NOT NULL,
+					vehiculeNumero INT NOT NULL,
+					clientId INT NOT NULL,
+					dateEffectuee DATETIME DEFAULT NOW(),
+					dateDemandee DATETIME DEFAULT NOW(),
+					disponibiliteReelle TINYINT DEFAULT 1,
+					etat VARCHAR(50),
+					dateAnnulation DATETIME,
+					nouvelleReservationNumero INT,
+					FOREIGN KEY (formuleType) REFERENCES Formule(type),
+					FOREIGN KEY (vehiculeNumero) REFERENCES Vehicule(numero),
+					FOREIGN KEY (clientId) REFERENCES Client(id),
+					FOREIGN KEY (nouvelleReservationNumero) REFERENCES Reservation(numero)
+				);
+
+				CREATE TABLE IF NOT EXISTS Location(
+					numeroContrat INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+					reservationNumero INT NOT NULL,
+					kilometrageDepart FLOAT NOT NULL,
+					dateDepart DATETIME DEFAULT NOW(),
+					numeroPermis VARCHAR(10),
+					paiementCaution TINYINT DEFAULT 1,
+					FOREIGN KEY (reservationNumero) REFERENCES Reservation(numero),
+					CHECK (kilometrageDepart > 0)
+				);
+
+				CREATE TABLE IF NOT EXISTS Reception(
+					locationNumeroContrat INT PRIMARY KEY NOT NULL,
+					kilometrageArrivee FLOAT NOT NULL,
+					dateArrivee DATETIME DEFAULT NOW(),
+					dommage VARCHAR(50),
+					FOREIGN KEY (locationNumeroContrat) REFERENCES Location(numeroContrat),
+					CHECK (kilometrageArrivee > 0)
+				);
+
+				CREATE TABLE IF NOT EXISTS Facture(
+					numero INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+					locationNumeroContrat INT,
+					etat VARCHAR(20) DEFAULT 'non-payé',
+					FOREIGN KEY (locationNumeroContrat) REFERENCES Location(numeroContrat)
+				);
+			</code></pre>
+
+			<h4>Insertion des données d'exemple</h4>
+			<pre class="language-sql line-numbers pre-scrollable"><code>
+				INSERT OR REPLACE INTO Assureur (
+					prenom,
+					nom
+				) VALUES (
+					'Jean-luc',
+					'Durant'
+				);
+
+				INSERT OR REPLACE INTO Assureur (
+					prenom,
+					nom
+				) VALUES (
+					'Michel',
+					'Bubois'
+				);
+
+				INSERT OR REPLACE INTO Assurance (
+					type,
+					assureurPrenom,
+					assureurNom
+				) VALUES (
+					'Omnium',
+					'Jean-luc',
+					'Durant'
+				);
+
+				INSERT OR REPLACE INTO Assurance (
+					type,
+					assureurPrenom,
+					assureurNom
+				) VALUES (
+					'Kilométrage',
+					'Jean-luc',
+					'Durant'
+				);
+
+				INSERT OR REPLACE INTO Assurance (
+					type,
+					assureurPrenom,
+					assureurNom
+				) VALUES (
+					'Annuelle',
+					'Michel',
+					'Bubois'
+				);
+
+				INSERT OR REPLACE INTO Option (
+					Code,
+					Libelle
+				) VALUES (
+					'O1',
+					'Break - 5 portes'
+				);
+
+				INSERT OR REPLACE INTO Option (
+					Code,
+					Libelle
+				) VALUES (
+					'O2',
+					'Berline - 5 portes'
+				);
+
+				INSERT OR REPLACE INTO Tarification (
+					code,
+					assuranceType,
+					prixKilometre,
+					amendeJournaliere
+				) VALUES (
+					'T1',
+					'Omnium',
+					1,
+					30
+				);
+
+				INSERT OR REPLACE INTO Tarification (
+					code,
+					assuranceType,
+					prixKilometre,
+					amendeJournaliere
+				) VALUES (
+					'T2',
+					'Kilométrage',
+					0.5,
+					40.0
+				);
+
+				INSERT OR REPLACE INTO Modele (
+					marque,
+					type,
+					optionCode,
+					tarificationCode
+				) VALUES (
+					'Audi',
+					'A3',
+					'O1',
+					'T2'
+				);
+
+				INSERT OR REPLACE INTO Modele (
+					marque,
+					type,
+					optionCode,
+					tarificationCode
+				) VALUES (
+					'BMW',
+					'520',
+					'O1',
+					'T1'
+				);
+
+				INSERT OR REPLACE INTO Vehicule (
+					modeleMarque,
+					modeleType
+				) VALUES (
+					'Audi',
+					'A3'
+				);
+
+				INSERT OR REPLACE INTO Vehicule (
+					modeleMarque,
+					modeleType
+				) VALUES (
+					'Audi',
+					'A3'
+				);
+
+				INSERT OR REPLACE INTO Vehicule (
+					modeleMarque,
+					modeleType
+				) VALUES (
+					'BMW',
+					'520'
+				);
+
+				INSERT OR REPLACE INTO Formule (
+					type,
+					kilometrageForfaitaire
+				) VALUES (
+					'Journée',
+					50
+				);
+
+				INSERT OR REPLACE INTO Formule (
+					type,
+					kilometrageForfaitaire
+				) VALUES (
+					'Semaine',
+					250
+				);
+
+				INSERT OR REPLACE INTO Formule (
+					type,
+					kilometrageForfaitaire
+				) VALUES (
+					'Week-end',
+					100
+				);
+
+				INSERT OR REPLACE INTO Montant (
+					tarificationCode,
+					formuleType,
+					montantForfaitaire
+				) VALUES (
+					'T1',
+					'Journée',
+					100
+				);
+
+				INSERT OR REPLACE INTO Montant (
+					tarificationCode,
+					formuleType,
+					montantForfaitaire
+				) VALUES (
+					'T2',
+					'Journée',
+					80
+				);
+
+				INSERT OR REPLACE INTO Montant (
+					tarificationCode,
+					formuleType,
+					montantForfaitaire
+				) VALUES (
+					'T1',
+					'Semaine',
+					500
+				);
+
+				INSERT OR REPLACE INTO Montant (
+					tarificationCode,
+					formuleType,
+					montantForfaitaire
+				) VALUES (
+					'T2',
+					'Semaine',
+					450
+				);
+
+				INSERT OR REPLACE INTO Montant (
+					tarificationCode,
+					formuleType,
+					montantForfaitaire
+				) VALUES (
+					'T1',
+					'Week-end',
+					160
+				);
+
+				INSERT OR REPLACE INTO Montant (
+					tarificationCode,
+					formuleType,
+					montantForfaitaire
+				) VALUES (
+					'T2',
+					'Week-end',
+					160
+				);
+
+				INSERT OR REPLACE INTO Client (
+					prenom,
+					nom
+				) VALUES (
+					'Bernad',
+					'Duchêne'
+				);
+
+				INSERT OR REPLACE INTO Client (
+					prenom,
+					nom
+				) VALUES (
+					'Monique',
+					'Ale'
+				);
+
+				INSERT OR REPLACE INTO Reservation (
+					formuleType,
+					vehiculeNumero,
+					clientId,
+					etat,
+					dateAnnulation,
+					nouvelleReservationNumero
+				) VALUES (
+					'Journée',
+					1,
+					1,
+					'Effectif',
+					null,
+					null
+				);
+
+				INSERT OR REPLACE INTO Reservation (
+					formuleType,
+					vehiculeNumero,
+					clientId,
+					etat,
+					dateAnnulation,
+					nouvelleReservationNumero
+				) VALUES (
+					'Journée',
+					2,
+					1,
+					'Effectif',
+					null,
+					null
+				);
+
+				INSERT OR REPLACE INTO Reservation (
+					formuleType,
+					vehiculeNumero,
+					clientId,
+					etat,
+					dateAnnulation,
+					nouvelleReservationNumero
+				) VALUES (
+					'Semaine',
+					3,
+					2,
+					'Supprimée',
+					NOW() + INTERVAL 1 DAY,
+					null
+				);
+
+				INSERT OR REPLACE INTO Reservation (
+					formuleType,
+					vehiculeNumero,
+					clientId,
+					etat,
+					dateAnnulation,
+					nouvelleReservationNumero
+				) VALUES (
+					'Week-end',
+					3,
+					1,
+					'Terminée',
+					null,
+					null
+				);
+
+				INSERT OR REPLACE INTO Reservation (
+					formuleType,
+					vehiculeNumero,
+					clientId,
+					etat,
+					dateAnnulation,
+					nouvelleReservationNumero
+				) VALUES (
+					'Journée',
+					2,
+					1,
+					'Terminée',
+					null,
+					null
+				);
+
+				UPDATE Reservation SET etat = 'Annulée',
+					nouvelleReservationNumero = 5
+				WHERE numero = 1;
+
+				INSERT OR REPLACE INTO Location (
+					reservationNumero,
+					kilometrageDepart,
+					dateDepart,
+					paiementCaution
+				) VALUES (
+					1,
+					20000,
+					'NOW(),
+					1
+				);
+
+				INSERT OR REPLACE INTO Location (
+					reservationNumero,
+					kilometrageDepart,
+					dateDepart,
+					paiementCaution
+				) VALUES (
+					4,
+					50000,
+					NOW(),
+					0
+				);
+
+				INSERT OR REPLACE INTO Location (
+					reservationNumero,
+					kilometrageDepart,
+					dateDepart,
+					paiementCaution
+				) VALUES (
+					5,
+					18000,
+					NOW(),
+					1
+				);
+
+				INSERT OR REPLACE INTO Reception (
+					locationNumeroContrat,
+					kilometrageArrivee,
+					dateArrivee
+				) VALUES (
+					2,
+					50050,
+					NOW() + INTERVAL 1 DAY
+				);
+
+				INSERT OR REPLACE INTO Reception (
+					locationNumeroContrat,
+					kilometrageArrivee,
+					dateArrivee
+				) VALUES (
+					3,
+					20050,
+					NOW() + INTERVAL 20 HOUR
+				);
+
+				INSERT OR REPLACE INTO Facture (
+					locationNumeroContrat
+				) VALUES (
+					2
+				);
+
+				INSERT OR REPLACE INTO Facture (
+					locationNumeroContrat
+				) VALUES (
+					3
+				);
+			</code></pre>
+
+		</div>
+
+		<div class="container" id="site">
+			<div class="page-header">
+				<h1>Implémentation de l'application</h1>
+			</div>
+
+			<p>
+				Une fois que la base de données était créée, l'étape suivante était de créer une interface pour intéragir avec. Pour cela, j'avais à l'origine décidé de créer une application <em>Java</em>. Seulement, ce language n'est pas le meilleur pour créer une interface ou intéragir avec une base de données. J'ai ensuite voulu créer un site web avec <em>PHP</em>. Néanmoins en concevant le site, il me manquait de la souplesse du côté serveur pour concevoir ce que j'avais en tête. J'ai finalement décider de recréer toute l'application avec les dernières technologies du web, un serveur <em>Node.js</em>.
+			</p>
+
+			<img class="img-rounded" src="site.png" alt="Design de l'application" />
+
+			<p>
+				Dans cette application, j'ai d'abord décidé de l'orienter pour une utilisation par un opérateur du client. Afin de pouvoir l'utiliser, il est nécessaire de se connecter au moyen d'un compte créé au préalable. Il est impossible de créer un nouveau compte sans passer par le serveur <em>MySQL</em>. Pour une personne non-connectée, les seules pages disponibles sont la page d'accueil, la page d'à propos ainsi que la page de connection.
+			</p>
+
+			<p>
+				<div class="row">
+
+					<div class="col-md-9">
+						<p>
+							La barre de navigation propose trois menus déroulants pour les différentes opérations que voudrait faire l'utilisateur. D'abord, lorsqu'un client se présente devant lui, il peut trouver dans l'onglet <em>Client</em> les opérations qu'il pourrait vouloir faire avec lui.
+						</p>
+
+						<ul>
+							<li class="p">Inscription d'un nouveau client dans la base de données</li>
+							<li class="p">Recherche et réservation d'un véhicule</li>
+							<li class="p">Récupération d'une voiture et départ de location</li>
+							<li class="p">Retour d'une voiture et fin de location</li>
+							<li class="p">Payement d'une facture passée</li>
+							<li class="p">Raport sur la fidélité d'un client</li>
+						</ul>
+					</div>
+
+					<div class="col-md-3">
+						<img class="img-rounded" src="client.png" alt="Onglet de navigation Client" />
+					</div>
+
+				</div>
+			</p>
+
+			<p>
+				<div class="row">
+
+					<div class="col-md-3">
+						<img class="img-rounded" src="reports.png" alt="Onglet de navigation Rapports" />
+					</div>
+
+					<div class="col-md-9">
+						<p>
+							Ensuite, l'onglet <em>Reports</em> donne un accès à une vision de l'état de l'entreprise.
+						</p>
+
+						<ul>
+							<li class="p">Rapport sur les voitures à louer</li>
+							<li class="p">Rapport sur le stock de voitures</li>
+							<li class="p">Rapport sur les véhicules réservés</li>
+							<li class="p">Rapport sur les véhicules en location</li>
+							<li class="p">Rapport sur les dernière locations</li>
+						</ul>
+					</div>
+
+				</div>
+			</p>
+
+			<p>
+				<div class="row">
+
+					<div class="col-md-9">
+						<p>
+							Enfin, l'onglet <em>Management</em> permet de modifier les différentes variables de l'entreprise.
+						</p>
+
+						<ul>
+							<li class="p">Ajout d'un nouveau véhicule</li>
+							<li class="p">Modifications des différentes formules</li>
+							<li class="p">Modification des différents prix</li>
+							<li class="p">Exécuter une requête SQL (seulement pour l'utilisateur <em>admin</em>)</li>
+						</ul>
+					</div>
+
+					<div class="col-md-3">
+						<img class="img-rounded" src="management.png" alt="Onglet de navigation Gestion" />
+					</div>
+
+				</div>
+			</p>
+
+		</div>
+
+		<div class="container" id="req">
+			<div class="page-header">
+				<h1>Requêtes principales</h1>
+			</div>
+
+			<p>
+				Ces liens de navigation amènent à des pages permettant d'intéragir avec la base de données. Dans cette section, je vais décrire quelques requêtes à la base de données particulièrement intéressantes.
+			</p>
+
+			<h4>Stock</h4>
+
+			<pre class="language-sql line-numbers pre-scrollable"><code>
+				SELECT
+					CONCAT(M.marque, ' ', M.type) AS 'Model',
+					COUNT(V.numero) AS 'Total number of cars',
+					O.libelle AS 'Options',
+					CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',
+					CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',
+					CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'
+				FROM Vehicule V
+					LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type
+					LEFT JOIN Options O ON M.optionCode = O.code
+					LEFT JOIN Tarification T On M.tarificationCode = T.code
+					LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code
+				WHERE
+					Mo.formuleType = 'Journée'
+					AND V.numero NOT IN(
+						SELECT R.vehiculeNumero
+						FROM Reservation R
+						WHERE R.etat = 'Effectif'
+					)
+				GROUP BY M.marque, M.type
+				;
+			</code></pre>
+
+			<h4>Locations</h4>
+
+			<pre class="language-sql line-numbers pre-scrollable"><code>
+				SELECT
+					V.numero AS 'Car number',
+					CONCAT(V.modeleMarque, ' ', V.modeleType) AS 'Model',
+					R.numero AS 'Reservation number',
+					CONCAT(C.prenom, ' ', C.nom) AS 'Client',
+					CASE
+						WHEN F.type = 'Journée' THEN
+							R.dateDemandee + INTERVAL 1 DAY
+						WHEN F.type = 'Semaine' THEN
+							R.dateDemandee + INTERVAL 1 WEEK
+						WHEN F.type = 'Week-end' THEN
+							R.dateDemandee + INTERVAL 3 DAY
+					END AS 'Return date'
+				FROM Reservation R
+					LEFT JOIN Vehicule V ON R.vehiculeNumero = V.numero
+					LEFT JOIN Client C ON R.clientId = C.Id
+				WHERE
+					R.etat = 'Effectif'
+					AND EXISTS (
+						SELECT L.numeroContrat
+						FROM Location L
+						WHERE L.reservationNumero = R.numero
+					)
+				;
+			</code></pre>
+
+			<h4>Propositions</h4>
+
+			<pre class="language-sql line-numbers pre-scrollable"><code>
+				SELECT
+					CONCAT(M.marque, ' ', M.type) AS 'Model',
+					COUNT(V.numero) AS 'Total number of cars',
+					O.libelle AS 'Options',
+					CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',
+					CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',
+					CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'
+				FROM Vehicule V
+					LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type
+					LEFT JOIN Options O ON M.optionCode = O.code
+					LEFT JOIN Tarification T On M.tarificationCode = T.code
+					LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code
+				WHERE
+					Mo.formuleType = 'Journée'
+					AND CONCAT(M.marque, ' ', M.type) = '" + modele + "'
+					AND O.code = '" + option + "'
+					AND V.numero NOT IN(
+						SELECT R.vehiculeNumero
+						FROM Reservation R
+						WHERE R.etat = 'Effectif'
+					)
+				GROUP BY M.marque, M.type
+				;
+			</code></pre>
+
+			<h4>Vue Factures</h4>
+
+			<pre class="language-sql line-numbers pre-scrollable"><code>
+				CREATE OR REPLACE VIEW VFacture AS
+					SELECT
+						Fa.numero AS factureNumero,
+						L.numeroContrat AS numeroContrat,
+						C.id AS clientId,
+						M.montantForfaitaire AS montantBase,
+						CASE
+							WHEN L.paiementCaution = 0 THEN
+								(M.montantForfaitaire / 100) * 3
+							ELSE
+								0
+						END AS fraisPaiementCaution,
+						CASE
+							WHEN Fo.type = 'Journée' AND Rec.dateArrivee > L.dateDepart + INTERVAL 1 DAY THEN
+								(DATEDIFF(Rec.dateArrivee, L.dateDepart) - 1) * T.amendeJournaliere
+							WHEN Fo.type = 'Semaine' AND Rec.dateArrivee > L.dateDepart + INTERVAL 1 WEEK THEN
+								(DATEDIFF(Rec.dateArrivee, L.dateDepart) - 7) * T.amendeJournaliere
+							WHEN Fo.type = 'Week-end' AND Rec.dateArrivee > L.dateDepart + INTERVAL 3 DAY THEN
+								(DATEDIFF(Rec.dateArrivee, L.dateDepart) - 3) * T.amendeJournaliere
+							ELSE
+								0
+						END AS fraisJoursSupps,
+						CASE
+							WHEN Rec.kilometrageArrivee - L.kilometrageDepart > Fo.kilometrageForfaitaire THEN
+								(Rec.kilometrageArrivee - L.kilometrageDepart - Fo.kilometrageForfaitaire) * T.prixKilometre
+							ELSE
+								0
+						END AS fraisKmSupps,
+						CASE
+							WHEN EXISTS (SELECT R.numero FROM Reservation R WHERE R.nouvelleReservationNumero = Res.numero) THEN
+								T.amendeJournaliere
+							ELSE
+								0
+						END AS compensationAnnulation
+					FROM Client C, Facture Fa, Formule Fo, Location L, Montant M, Modele Mo, Reception Rec, Reservation Res, Tarification T, Vehicule V
+					WHERE
+						Fa.locationNumeroContrat = L.numeroContrat AND
+						Rec.locationNumeroContrat = L.numeroContrat AND
+						L.reservationNumero = Res.numero AND
+						Res.formuleType = Fo.type AND
+						Res.vehiculeNumero = V.numero AND
+						Res.clientId = C.id AND
+						M.tarificationCode = T.code AND
+						M.formuleType = Fo.type AND
+						V.modeleMarque = Mo.marque AND
+						V.modeleType = Mo.type AND
+						Mo.tarificationCode = T.code
+				;
+			</code></pre>
+
+			<h4>Factures</h4>
+
+			<pre class="language-sql line-numbers pre-scrollable"><code>
+				SELECT
+					V.factureNumero AS 'Bill Number',
+					CONCAT(C.prenom, ' ', C.nom) AS 'Client',
+					C.adresse AS 'Billing address',
+					V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + V.fraisKmSupps - V.compensationAnnulation AS 'Total',
+					F.etat AS 'State'
+				FROM Client C
+					RIGHT JOIN VFacture V ON V.clientId = C.id
+					LEFT JOIN Facture F ON V.factureNumero = F.numero
+				WHERE C.id = 1
+				ORDER BY V.factureNumero DESC
+				;
+			</code></pre>
+
+			<h4>Fidélité</h4>
+
+			<pre class="language-sql line-numbers pre-scrollable"><code>
+				SELECT
+					CONCAT(C.prenom, ' ', C.nom) AS 'Client',
+					COUNT(V.factureNumero) AS 'Number of reservations',
+					SUM(V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + V.fraisKmSupps - V.compensationAnnulation) AS 'Sum'
+				FROM Client C
+					LEFT JOIN VFacture V ON V.clientId = C.id
+				WHERE C.id = 1
+				;
+			</code></pre>
+
+		</div>
+
+		<div class="container" id="ccl">
+			<div class="page-header">
+				<h1>Conclusion</h1>
+			</div>
+
+			<p>
+				Pour conclure, ce projet m'a permis d'appronfondir mes connaissances des bases de données relationnelles. J'ai pu aussi expérimenter la programmation web avec le <em>PHP</em> ou le <em>Node.js</em>. L'application créée a été pensée pour le client et devrait remplir ses attentes.
+			</p>
+
+		</div>
+
+		<script>
+			$(document).ready(function() {
+				// Add smooth scrolling to all links in navbar + footer link
+				$(".navbar a").on('click', function(event) {
+					if (this.hash !== "") {
+						event.preventDefault();
+						var hash = this.hash;
+						$('html, body').animate({
+							scrollTop: $(hash).offset().top
+						}, 900, function(){
+							window.location.hash = hash;
+						});
+					}
+				});
+
+				$(window).scroll(function() {
+					$(".slideanim").each(function(){
+						var pos = $(this).offset().top;
+						var winTop = $(window).scrollTop();
+						if (pos < winTop + 600) $(this).addClass("slide");
+					});
+				});
+			})
+		</script>
+
+	</body>
+</html>

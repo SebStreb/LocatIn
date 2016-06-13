@@ -58,6 +58,7 @@ html
 							li.dropdown(class=(user === 'admin') ? "abled" : "disabled", class=(rel === 'Management') ? "active" : "notactive")
 								a.dropdown-toggle(href="/management", data-toggle="dropdown", role="button", aria-haspopup="true", aria-expanded="false") Management #[span.caret]
 								ul.dropdown-menu
+									li #[a(href="/management/user")= "New user"]
 									li #[a(href="/management/vehicule")= "New vehicule"]
 									li #[a(href="/management/rate")= "New rate"]
 									li #[a(href="/management/rate-2")= "Change rate"]

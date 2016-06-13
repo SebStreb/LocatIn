@@ -19,6 +19,27 @@ router.use(function (req, res, next) {
 		res.redirect('/');
 });
 
+router.get('/user', function (req, res) {
+	res.render('management/user', {title: 'User', rel: 'Management', user: req.session.passport.user});
+});
+
+router.post('/user', function (req, res) {
+	if (req.body.password !== req.body.confirm)
+		res.render('management/user', {title: 'User', message: 'Confirmation didn\'t match password', rel: 'Management', user: req.session.passport.user});
+	else {
+		user.insert({username: req.body.username, password: req.body.password}, function (result) {
+			if (result.ID === 0)
+				res.render('management/user', {title: 'User', message: 'Username already taken', rel: 'Management', user: req.session.passport.user});
+			else {
+				result.title = 'Result';
+				result.rel = 'Management';
+				result.user = req.session.passport.user;
+				res.render('result', result);
+			}
+		})
+	}
+});
+
 router.get('/vehicule', function (req, res) {
 	modele.getAll(function (results) {
 		res.render('management/vehicule', {title: 'Vehicule', results: results, rel: 'Management', user: req.session.passport.user});
@@ -45,14 +66,27 @@ router.get('/vehicule-2', function (req, res) {
 });
 
 router.post('/vehicule-2', function (req, res) {
-	modele.insert({marque: req.body.marque, type: req.body.type, optionCode: req.body.option, tarificationCode: req.body.tarification}, function () {
-		vehicule.insert({modeleMarque: req.body.marque, modeleType: req.body.type}, function (result) {
-			result.title = 'Result';
-			result.rel = 'Management';
-			result.user = req.session.passport.user;
-			res.render('result', result);
+	if (req.body.option === 'new') {
+		option.insert({code: req.body.code, libelle: req.body.libelle}, function () {
+			modele.insert({marque: req.body.marque, type: req.body.type, optionCode: req.body.code, tarificationCode: req.body.tarification}, function () {
+				vehicule.insert({modeleMarque: req.body.marque, modeleType: req.body.type}, function (result) {
+					result.title = 'Result';
+					result.rel = 'Management';
+					result.user = req.session.passport.user;
+					res.render('result', result);
+				});
+			});
 		});
-	});
+	} else {
+		modele.insert({marque: req.body.marque, type: req.body.type, optionCode: req.body.option, tarificationCode: req.body.tarification}, function () {
+			vehicule.insert({modeleMarque: req.body.marque, modeleType: req.body.type}, function (result) {
+				result.title = 'Result';
+				result.rel = 'Management';
+				result.user = req.session.passport.user;
+				res.render('result', result);
+			});
+		});
+	}
 });
 
 router.get('/rate', function (req, res) {

@@ -1,0 +1,35 @@
+.container {
+	padding: 40px 50px 0px
+}
+
+p {
+	font-size: 1.5em;
+	padding: 20px 50px;
+	text-align: justify;
+}
+
+li.p {
+	font-size: 1.5em;
+	text-align: justify;
+}
+
+nav {
+	letter-spacing: 3px;
+	font-size: 1.5em;
+}
+
+.jumbotron {
+	background-color: #ddd;
+}
+
+.btn-default {
+	background-color: #ddd;
+}
+
+.thumbnail img {
+	height: 500px;
+}
+
+.img-rounded {
+	width: 100%;
+}
