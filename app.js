@@ -52,5 +52,4 @@ app.use(function(error, req, res, next) {
 		res.render('500', {title: '500', error: error});
 });
 
-console.log('Server listening on port 3000');
-app.listen(3000);
+module.exports = app;
