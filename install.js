@@ -26,8 +26,8 @@ tomorow.setDate(today.getDate() + 1);
 var befTomorow = new Date();
 befTomorow.setHours(today.getHours() + 28);
 
-var connection = sql.createConnection({
-    host     : 'localhost',
+/*var connection = sql.createConnection({
+    host     : 'eu-cdbr-west-01.cleardb.com',
     user     : 'b1bb440ebb3969',
     password : '74aea619'
 });
@@ -40,7 +40,7 @@ connection.query("DROP DATABASE LocatIn", function (err) {
 connection.query("CREATE DATABASE LocatIn", function (err) {
     if (err) console.error('CREATE DATABASE : ' + err.code);
 });
-connection.end();
+connection.end();*/
 
 setTimeout(function () {
     user.create();

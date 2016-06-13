@@ -3,10 +3,10 @@
 var mysql = require('mysql');
 
 var pool  = mysql.createPool({
-	host     : 'localhost',
+	host     : 'eu-cdbr-west-01.cleardb.com',
 	user     : 'b1bb440ebb3969',
 	password : '74aea619',
-	database : 'LocatIn',
+	database : 'heroku_577e100f766e1eb',
 	connectionLimit: 1
 });
 
