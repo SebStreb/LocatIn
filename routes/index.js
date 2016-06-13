@@ -31,10 +31,6 @@ router.get('/about', function(req, res) {
 	}
 });
 
-router.get('/report', function (req, res) {
-	res.sendfile('/public/report/index.html');
-});
-
 router.get('/login', function(req, res) {
 	if (req.session.passport) {
 		res.render('login', {title: 'Login', rel: 'Login', user: req.session.passport.user});

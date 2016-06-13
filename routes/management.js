@@ -11,12 +11,14 @@ var user = require('../database/user.js');
 
 router.use(function (req, res, next) {
 	if (req.session.passport) {
-		if (req.session.passport.user !== 'admin')
-			res.redirect('/');
-		else
-			next();
-	} else
-		res.redirect('/');
+		if (req.session.passport.user !== 'admin') {
+			res.status(403);
+			res.render('403', {title: '403', rel: 'Management', user: req.session.passport.user});
+		} else next();
+	} else {
+		res.status(401);
+		res.render('401', {title: '401', rel: 'Management'});
+	}
 });
 
 router.get('/user', function (req, res) {

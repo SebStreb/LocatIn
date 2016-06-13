@@ -1,8 +1,9 @@
 extends ./layout.pug
 
 block content
-	.container
-		.page-header
-			h1 Error 500
-		p Internal Server Error...
-		p #{error}
+	.jumbotron
+		.container
+			.page-header
+				h1 Error 500
+			p Internal Server Error... #[a(href="/")= "Go to index"]
+			p #{error}

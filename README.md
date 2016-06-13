@@ -1,14 +1,14 @@
 # LocatIn
-Information System website using Node.js and MySQL.
+Information System website using Node.js and MySQL. Online at https://locatin.herokuapp.com.
 
-Written by Sébastien Strebelle for the course LINGE1322 (Université Catholique de Louvain)
+Written by Sébastien Strebelle for the course LINGE1322 (Université Catholique de Louvain).
 
 ## Install
-In order to use this website, you have to get `Node.js` and `MySQL`. Look their website (http:// ?) for installation instructions.
+In order to use this website, you have to get *Node.js*. Look their [website](https://nodejs.org/en/) for installation instructions.
 
-When Node.js and MySQL are installed, simply launch the installation process with `$ npm install`. You may have to modify the file `install.js` to add your root password for MySQL.
+When *Node.js* is installed, simply launch the initialization process with `$ npm install`.
 
-If you happen to get errors during the installation, you may contact me (mailto:sebastien.strebelle@student.uclouvain.be).
+If you happen to get errors during the installation, you may contact me by [email](mailto:sebastien.strebelle@student.uclouvain.be).
 
 ## Launch
 When everything is installed properly, you may simply launch the server with `$ npm start`. Then you can access the website at http://localhost:3000.

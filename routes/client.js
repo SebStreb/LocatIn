@@ -14,12 +14,14 @@ var queries = require('../database/queries.js');
 
 router.use(function (req, res, next) {
 	if (req.session.passport) {
-		if (!req.session.passport.user)
-			res.redirect('/');
-		else
-			next();
-	} else
-		res.redirect('/');
+		if (!req.session.passport.user) {
+			res.status(401);
+			res.render('401', {title: '401', rel: 'Client'});
+		} else next();
+	} else {
+		res.status(401);
+		res.render('401', {title: '401', rel: 'Client'});
+	}
 });
 
 router.get('/inscription', function(req, res) {
