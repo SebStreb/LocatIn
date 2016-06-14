@@ -41,7 +41,7 @@
 			</div>
 			<h2>Conception d'un Système d'Information - <strong>LocatIn</strong></h2>
 			<h4><a href="/">Lien vers l'application</a></h4>
-			<h3>Avril-Mai 2016</h3>
+			<h3>Avril - Mai - Juin 2016</h3>
 		</div>
 
 		<div class="container" id="intro">
@@ -50,7 +50,7 @@
 			</div>
 
 			<p>
-				Dans le cadre du cours <em>LINGE1322 - Analyse et Conception de systèmes d’informations</em>, il nous a été demandé de concevoir une base de données pour une société delocation de voitures. Ce rapport décrit les différentes étapes de l’analyse, la conception et enfin l’implémentation d’un système d’information complet pour ce client.
+				Dans le cadre du cours <em>LINGE1322 - Analyse et Conception de systèmes d’informations</em>, il nous a été demandé de concevoir une base de données pour une société de location de voitures. Ce rapport décrit les différentes étapes de l’analyse, la conception et enfin l’implémentation d’un système d’information complet pour ce client.
 			</p>
 
 		</div>
@@ -65,7 +65,7 @@
 			</p>
 
 			<p>
-				Dans cette entreprise, les véhicules sont classés par modèles. Ceux-ci sont caractérisées par des options, ainsi qu'une classe de tarification. Selon cette tarification, un véhicule aura un contrat d'assurance toujours proposé par le même assureur.
+				Dans cette entreprise, les véhicules sont classés par modèles. Ceux-ci sont caractérisés par des options, ainsi qu'une classe de tarification. Selon cette tarification, un véhicule aura un contrat d'assurance toujours proposé par le même assureur.
 			</p>
 
 			<p>
@@ -77,7 +77,7 @@
 			</p>
 
 			<p>
-				Après sa location, le client peut ramener la voiture à l'entreprise. Celle-ci note alors la date d'arrivée et la distance parcourue. Une facture est créée et le client a la possibilité de la payer. Le montant de la facture dépend du montant forfaitaire de la location, du paiement de la caution, du dépassement du nombre de kilomètres forfaitaires ainsi que du retard qu'il aurait pu avoir à la remise du véhicule, ceci selon sa classe de tarification. Le client est aussi dédommagé s'il avait du changer de réservation à cause d'une indisponibilité.
+				Après sa location, le client peut ramener la voiture à l'entreprise. Celle-ci note alors la date d'arrivée et la distance parcourue. Une facture est créée et le client a la possibilité de la payer. Le montant de la facture dépend du montant forfaitaire de la location, du paiement de la caution, du dépassement du nombre de kilomètres forfaitaires ainsi que du retard qu'il aurait pu avoir à la remise du véhicule, ceci selon sa classe de tarification. Le client est aussi dédommagé s'il avait dû changer de réservation à cause d'une indisponibilité.
 			</p>
 		</div>
 
@@ -91,7 +91,7 @@
 			</p>
 
 			<p>
-				Par rapport au cas d'étude, j'ai du rajouter une entité <em>User</em>, afin de modéliser un opérateur de l'entreprise qui va utiliser le système d'information que j'ai créé par après.
+				Par rapport au cas d'étude, j'ai dû rajouter une entité <em>User</em>, afin de modéliser un opérateur de l'entreprise qui va utiliser le système d'information que j'ai créé par après.
 			</p>
 
 			<p>
@@ -114,7 +114,7 @@
 			</div>
 
 			<p>
-				Sur base de ce schéma, j'ai pu créer la base de données au moyen de requêtes <em>SQL</em>. J'avais initialement implémentée cette base de données au moyen de <em>SQLite</em>. Néanmoins, la faiblesse des interfaces de communication avec ce <em>SGBD</em> m'a convaincu d'utiliser un serveur <em>MySQL</em> pour ma base de données. La base de données <em>MySQL</em> en ligne du système d'information est accessible au moyen des identifiants suivant :
+				Sur base de ce schéma, j'ai pu créer la base de données au moyen de requêtes <em>SQL</em>. J'avais initialement implémenté cette base de données au moyen de <em>SQLite</em>. Néanmoins, la faiblesse des interfaces de communication avec ce <em>SGBD</em> m'a convaincu d'utiliser un serveur <em>MySQL</em> pour ma base de données. La base de données <em>MySQL</em> en ligne du système d'information est accessible au moyen des identifiants suivant :
 			</p>
 
 			<ul class="p">
@@ -728,7 +728,7 @@
 							<li class="p">Rapport sur le stock actuel de véhicules</li>
 							<li class="p">Rapport sur les véhicules réservés</li>
 							<li class="p">Rapport sur les véhicules en location</li>
-							<li class="p">Rapport sur les dernière locations</li>
+							<li class="p">Rapport sur les dernières locations</li>
 						</ul>
 					</div>
 
@@ -798,7 +798,7 @@
 				</code></pre>
 
 				<p>
-					Cette requête permet d'avoir une vision du stock actuel de véhicules dans l'entreprise. Dans cette requête je trie les véhicules pour ne garder que ceux dont il n'y a pas réservation effective.
+					Cette requête permet d'avoir une vision du stock actuel de véhicules dans l'entreprise. Dans cette requête je trie les véhicules pour ne garder que ceux pour lesquels il n'y a pas réservation effective.
 				</p>
 
 			<h4>Véhicules en location</h4>
@@ -831,7 +831,7 @@
 				</code></pre>
 
 				<p>
-					Cette requête permet de voir les véhicules qui sont actuellement en location. Dans cette requête, j'utilise une instruction <em>Case</em> afin de trouver la date de retour supposée selon la formule choisie. Je trie aussi les réservations en ne gardant que celles dont une location est liée.
+					Cette requête permet de voir les véhicules qui sont actuellement en location. Dans cette requête, j'utilise une instruction <em>Case</em> afin de trouver la date de retour supposée selon la formule choisie. Je trie aussi les réservations en ne gardant que celles auxquelles une location est liée.
 				</p>
 
 			<h4>Propositions de véhicules</h4>

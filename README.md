@@ -30,6 +30,10 @@ This file launches the server.
 
 This file configures the connexion to the website
 
+- Procfile :
+
+This file defines the running scripts for Heroku
+
 - database :
 
 This directory contains the table definitions and access methods of the database.
@@ -40,4 +44,8 @@ This directory contains the routing methods of the website.
 
 - public :
 
-This directory contains the pages and stylsheets of the website.
+This directory contains the pages and stylesheets of the website.
+
+- bin :
+
+This directory contains the executable files

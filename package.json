@@ -1,6 +1,6 @@
 {
   "name": "locatin",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Information System website using Node.js and SQLite",
   "main": "app.js",
   "scripts": {
