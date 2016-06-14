@@ -25,11 +25,11 @@
 				</div>
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#intro">Introduction</a></li>
-						<li><a href="#bdd">Modélisation</a></li>
-						<li><a href="#site">Implémentation</a></li>
-						<li><a href="#req">Requêtes</a></li>
-						<li><a href="#ccl">Conclusion</a></li>
+						<li><a href="#cas">Cas d'étude</a></li>
+						<li><a href="#model">Modèle de données</a></li>
+						<li><a href="#func">Fonctionnalités</a></li>
+						<li><a href="#imp">Implémentation</a></li>
+						<li><a href="#req">Requêtes importantes</a></li>
 					</ul>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 				<h1>Rapport de projet</h1>
 			</div>
 			<h2>Conception d'un Système d'Information - <strong>LocatIn</strong></h2>
-			<h4><a href="http://localhost:3000">Lien vers l'application</a></h4>
+			<h4><a href="/">Lien vers l'application</a></h4>
 			<h3>Avril-Mai 2016</h3>
 		</div>
 
@@ -50,18 +50,52 @@
 			</div>
 
 			<p>
-				Dans le cadre du cours <em>LINGE1322 - Analyse et Conception de systèmes d'informations</em>, il nous a été demandé de concevoir une base de données pour une société de location de voitures. Ce rapport décrit les différentes étapes de l'analyse, la conception et enfin l'implémentation d'un système d'information complet pour ce client.
+				Dans le cadre du cours <em>LINGE1322 - Analyse et Conception de systèmes d’informations</em>, il nous a été demandé de concevoir une base de données pour une société delocation de voitures. Ce rapport décrit les différentes étapes de l’analyse, la conception et enfin l’implémentation d’un système d’information complet pour ce client.
 			</p>
 
 		</div>
 
-		<div class="container" id="bdd">
+		<div class="container" id="cas">
+			<div class="page-header">
+				<h1>Cas d'étude</h1>
+			</div>
+
+			<p>
+				Pour ce projet, nous avons reçu la description d'un cas d'étude. Il donne l'analyse de l'organisation des données d'une entreprise de location de voiture.
+			</p>
+
+			<p>
+				Dans cette entreprise, les véhicules sont classés par modèles. Ceux-ci sont caractérisées par des options, ainsi qu'une classe de tarification. Selon cette tarification, un véhicule aura un contrat d'assurance toujours proposé par le même assureur.
+			</p>
+
+			<p>
+				L'entreprise possède également 3 formules différentes (journée, semaine et week-end), définissant le temps d'une location ainsi qu'un nombre de kilomètre à ne pas dépasser avec la voiture. Le prix de base d'une location dépendra de la formule et de la classe de tarification.
+			</p>
+
+			<p>
+				Avant de pouvoir effectuer une location, un client doit faire une réservation. Au jour où il a demandé, si le véhicule souhaité est effectivement disponible le client a alors la possibilité de démarrer une location. Un contrat est créé, afin d'enregistrer la date de départ, le kilométrage initial de la voiture ainsi que le permis de conduire du client. Celui-ci a aussi la possibilité de payer une caution. Si le véhicule n'était pas disponible il peut effectuer une nouvelle réservation. Le client a également la possibilité d'annuler sa réservation à tout moment.
+			</p>
+
+			<p>
+				Après sa location, le client peut ramener la voiture à l'entreprise. Celle-ci note alors la date d'arrivée et la distance parcourue. Une facture est créée et le client a la possibilité de la payer. Le montant de la facture dépend du montant forfaitaire de la location, du paiement de la caution, du dépassement du nombre de kilomètres forfaitaires ainsi que du retard qu'il aurait pu avoir à la remise du véhicule, ceci selon sa classe de tarification. Le client est aussi dédommagé s'il avait du changer de réservation à cause d'une indisponibilité.
+			</p>
+		</div>
+
+		<div class="container" id="model">
 			<div class="page-header">
 				<h1>Modélisation de la base de données</h1>
 			</div>
 
 			<p>
-				La première étape de la conception de ce système d'information a été l'analyse du cas d'étude. Celui-ci décrit l'organisation des données d'une société de location de voitures. Après l'analyse approfondie du cas d'étude, j'ai modélisé ces données au moyen d'un schéma entité-association. J'ai ensuite pu traduire ce modèle en un schéma relationnel de base de données.
+				Après l'analyse approfondie du cas d'étude, j'ai pu modéliser les données de l'entreprise en différentes entités possédant des relations entre elles au moyen d'un schéma entité-association.
+			</p>
+
+			<p>
+				Par rapport au cas d'étude, j'ai du rajouter une entité <em>User</em>, afin de modéliser un opérateur de l'entreprise qui va utiliser le système d'information que j'ai créé par après.
+			</p>
+
+			<p>
+				Sur base du schéma entité-association que j'ai élaboré, j'ai été capable de créer une base de données relationnelle représentant le modèle de données du cas d'étude.
 			</p>
 
 			<div class="row">
@@ -80,8 +114,15 @@
 			</div>
 
 			<p>
-				Après avoir modélisé le cas d'étude en graphique, l'étape suivante était de traduire ces modèles en une base de données relationnelle. Pour cette base de données, j'avais à l'origine choisi d'utilier <em>SQLite</em>. Néanmoins, ce type de base de données est parfois limité et j'ai eu plusieurs problèmes lors de l'intégration au site web. J'ai alors choisi porter ma base de données en <em>MySQL</em>.
+				Sur base de ce schéma, j'ai pu créer la base de données au moyen de requêtes <em>SQL</em>. J'avais initialement implémentée cette base de données au moyen de <em>SQLite</em>. Néanmoins, la faiblesse des interfaces de communication avec ce <em>SGBD</em> m'a convaincu d'utiliser un serveur <em>MySQL</em> pour ma base de données. La base de données <em>MySQL</em> en ligne du système d'information est accessible au moyen des identifiants suivant :
 			</p>
+
+			<ul class="p">
+				<li class="p"><b>Host :</b> eu-cdbr-west-01.cleardb.com</li>
+				<li class="p"><b>User :</b> b1bb440ebb3969</li>
+				<li class="p"><b>Password :</b> 74aea619</li>
+				<li class="p"><b>Database :</b> heroku_577e100f766e1eb</li>
+			</ul>
 
 			<h4>Création des tables de la base de données</h4>
 			<pre class="language-sql line-numbers pre-scrollable"><code>
@@ -536,7 +577,7 @@
 				) VALUES (
 					1,
 					20000,
-					'NOW(),
+					NOW(),
 					1
 				);
 
@@ -599,19 +640,50 @@
 
 		</div>
 
-		<div class="container" id="site">
+		<div class="container" id="func">
+			<div class="page-header">
+				<h1>Fonctionnalités</h1>
+			</div>
+
+				<p>
+					Une fois que le modèle de données était créé, j'ai voulu proposer un système d'information complet pour l'entreprise du cas d'étude. La première étape était alors d'analyser les besoins du client afin de trouver les fonctionnalités qui lui seraient pertinentes.
+				</p>
+
+				<p>
+					J'ai d'abord décidé d'orienter mon système d'information pour une utilisation par un opérateur de l'entreprise. Afin d'assurer la sécurité de l'entreprise, celui-ci devra se connecter avant de pouvoir effectuer des opérations. Trois types d'opérations me semblaient importantes à réaliser.
+				</p>
+
+				<p>
+					D'abord, l'opérateur doit pouvoir accueillir un client et répondre à ses besoins. Il doit pouvoir s'inscrire dans la base de données, réserver une voiture, gérer sa réservation, commencer une location, retourner un véhicule, payer ses factures ainsi que voir sa fidélité.
+				</p>
+
+				<p>
+					Ensuite, l'opérateur doit pouvoir avoir une vue d'ensemble sur l'état de l'entreprise. Pour cela, il doit pouvoir obtenir un rapport sur le catalogue de véhicules, ceux qui sont en stock, ceux qui sont en réservation, ceux qui sont en location et enfin un rapport sur l'historique des dernières réservations.
+				</p>
+
+				<p>
+					Enfin l'opérateur doit pouvoir modifier rapidement l'état de l'entreprise. Il peut vouloir donner l'accès à un nouvel opérateur, rajouter un véhicule, rajouter une nouvelle classe de tarification, modifier les tarifications des véhicules ou encore modifier les prix de l'entreprise.
+				</p>
+
+				<p>
+					Toutes ces fonctionnalités ne doivent pas pouvoir être accessibles à tous les opérateurs. Certaines opérations sensibles, comme les modifications de prix par exemple, ne peuvent être accessibles qu'à certains comptes afin de garantir la sécurité de l'entreprise.
+				</p>
+
+		</div>
+
+		<div class="container" id="imp">
 			<div class="page-header">
 				<h1>Implémentation de l'application</h1>
 			</div>
 
 			<p>
-				Une fois que la base de données était créée, l'étape suivante était de créer une interface pour intéragir avec. Pour cela, j'avais à l'origine décidé de créer une application <em>Java</em>. Seulement, ce language n'est pas le meilleur pour créer une interface ou intéragir avec une base de données. J'ai ensuite voulu créer un site web avec <em>PHP</em>. Néanmoins en concevant le site, il me manquait de la souplesse du côté serveur pour concevoir ce que j'avais en tête. J'ai finalement décider de recréer toute l'application avec les dernières technologies du web, un serveur <em>Node.js</em>.
+				J'avais à l'origine décidé d'implémenter ce système d'information au moyen d'une application <em>Java</em>. Seulement, ce langage n'est pas le meilleur pour créer une interface ou interagir avec une base de données. J'ai ensuite voulu créer un site web avec <em>PHP</em>. Néanmoins en concevant le site, il me manquait de la souplesse du côté serveur pour concevoir ce que j'avais en tête. J'ai finalement décider de recréer toute l'application avec les dernières technologies du web, un serveur <em>Node.js</em>.
 			</p>
 
 			<img class="img-rounded" src="site.png" alt="Design de l'application" />
 
 			<p>
-				Dans cette application, j'ai d'abord décidé de l'orienter pour une utilisation par un opérateur du client. Afin de pouvoir l'utiliser, il est nécessaire de se connecter au moyen d'un compte créé au préalable. Il est impossible de créer un nouveau compte sans passer par le serveur <em>MySQL</em>. Pour une personne non-connectée, les seules pages disponibles sont la page d'accueil, la page d'à propos ainsi que la page de connection.
+				Comme spécifié dans les fonctionnalités, il faut se connecter pour pouvoir agir sur le site. Sinon les seules pages disponibles sont la page d'accueil, la page d'à propos ainsi que la page de connection. La barre de navigation propose trois menus déroulants pour les différentes opérations que voudrait faire l'opérateur.
 			</p>
 
 			<p>
@@ -619,16 +691,16 @@
 
 					<div class="col-md-9">
 						<p>
-							La barre de navigation propose trois menus déroulants pour les différentes opérations que voudrait faire l'utilisateur. D'abord, lorsqu'un client se présente devant lui, il peut trouver dans l'onglet <em>Client</em> les opérations qu'il pourrait vouloir faire avec lui.
+							D'abord, lorsqu'un client se présente dans l'entreprise, l'opérateur peut trouver dans l'onglet <em>Client</em> les opérations qu'il pourrait vouloir faire avec lui.
 						</p>
 
-						<ul>
+						<ul class="p">
 							<li class="p">Inscription d'un nouveau client dans la base de données</li>
 							<li class="p">Recherche et réservation d'un véhicule</li>
 							<li class="p">Récupération d'une voiture et départ de location</li>
 							<li class="p">Retour d'une voiture et fin de location</li>
-							<li class="p">Payement d'une facture passée</li>
-							<li class="p">Raport sur la fidélité d'un client</li>
+							<li class="p">Paiement d'une facture</li>
+							<li class="p">Rapport sur la fidélité d'un client</li>
 						</ul>
 					</div>
 
@@ -648,12 +720,12 @@
 
 					<div class="col-md-9">
 						<p>
-							Ensuite, l'onglet <em>Reports</em> donne un accès à une vision de l'état de l'entreprise.
+							Ensuite, l'onglet <em>Reports</em> donne un accès à une vision de l'état actuel de l'entreprise.
 						</p>
 
-						<ul>
-							<li class="p">Rapport sur les voitures à louer</li>
-							<li class="p">Rapport sur le stock de voitures</li>
+						<ul class="p">
+							<li class="p">Rapport sur le catalogue de véhicules à louer</li>
+							<li class="p">Rapport sur le stock actuel de véhicules</li>
 							<li class="p">Rapport sur les véhicules réservés</li>
 							<li class="p">Rapport sur les véhicules en location</li>
 							<li class="p">Rapport sur les dernière locations</li>
@@ -668,14 +740,16 @@
 
 					<div class="col-md-9">
 						<p>
-							Enfin, l'onglet <em>Management</em> permet de modifier les différentes variables de l'entreprise.
+							Enfin, l'onglet <em>Management</em> permet de modifier l'état de l'entreprise. Ces opérations sensibles ne sont accessibles que pour l'utilisateur <em>admin</em>.
 						</p>
 
-						<ul>
+						<ul class="p">
+							<li class="p">Ajout de l'accès au système d'information pour un nouvel opérateur</li>
 							<li class="p">Ajout d'un nouveau véhicule</li>
-							<li class="p">Modifications des différentes formules</li>
-							<li class="p">Modification des différents prix</li>
-							<li class="p">Exécuter une requête SQL (seulement pour l'utilisateur <em>admin</em>)</li>
+							<li class="p">Ajout d'une nouvelle classe de tarification</li>
+							<li class="p">Changement de classe de tarification pour un véhicule</li>
+							<li class="p">Modifications des prix de l'entreprise</li>
+							<li class="p">Exécuter une requête <em>SQL</em></li>
 						</ul>
 					</div>
 
@@ -694,174 +768,198 @@
 			</div>
 
 			<p>
-				Ces liens de navigation amènent à des pages permettant d'intéragir avec la base de données. Dans cette section, je vais décrire quelques requêtes à la base de données particulièrement intéressantes.
+				Durant la création de ce système d'information, j'ai utilisé différentes requêtes <em>SQL</em>. Dans cette section, je vais montrer certaines requêtes particulièrement intéressantes.
 			</p>
 
-			<h4>Stock</h4>
+			<h4>Stock actuel de véhicules</h4>
 
-			<pre class="language-sql line-numbers pre-scrollable"><code>
-				SELECT
-					CONCAT(M.marque, ' ', M.type) AS 'Model',
-					COUNT(V.numero) AS 'Total number of cars',
-					O.libelle AS 'Options',
-					CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',
-					CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',
-					CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'
-				FROM Vehicule V
-					LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type
-					LEFT JOIN Options O ON M.optionCode = O.code
-					LEFT JOIN Tarification T On M.tarificationCode = T.code
-					LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code
-				WHERE
-					Mo.formuleType = 'Journée'
-					AND V.numero NOT IN(
-						SELECT R.vehiculeNumero
-						FROM Reservation R
-						WHERE R.etat = 'Effectif'
-					)
-				GROUP BY M.marque, M.type
-				;
-			</code></pre>
-
-			<h4>Locations</h4>
-
-			<pre class="language-sql line-numbers pre-scrollable"><code>
-				SELECT
-					V.numero AS 'Car number',
-					CONCAT(V.modeleMarque, ' ', V.modeleType) AS 'Model',
-					R.numero AS 'Reservation number',
-					CONCAT(C.prenom, ' ', C.nom) AS 'Client',
-					CASE
-						WHEN F.type = 'Journée' THEN
-							R.dateDemandee + INTERVAL 1 DAY
-						WHEN F.type = 'Semaine' THEN
-							R.dateDemandee + INTERVAL 1 WEEK
-						WHEN F.type = 'Week-end' THEN
-							R.dateDemandee + INTERVAL 3 DAY
-					END AS 'Return date'
-				FROM Reservation R
-					LEFT JOIN Vehicule V ON R.vehiculeNumero = V.numero
-					LEFT JOIN Client C ON R.clientId = C.Id
-				WHERE
-					R.etat = 'Effectif'
-					AND EXISTS (
-						SELECT L.numeroContrat
-						FROM Location L
-						WHERE L.reservationNumero = R.numero
-					)
-				;
-			</code></pre>
-
-			<h4>Propositions</h4>
-
-			<pre class="language-sql line-numbers pre-scrollable"><code>
-				SELECT
-					CONCAT(M.marque, ' ', M.type) AS 'Model',
-					COUNT(V.numero) AS 'Total number of cars',
-					O.libelle AS 'Options',
-					CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',
-					CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',
-					CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'
-				FROM Vehicule V
-					LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type
-					LEFT JOIN Options O ON M.optionCode = O.code
-					LEFT JOIN Tarification T On M.tarificationCode = T.code
-					LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code
-				WHERE
-					Mo.formuleType = 'Journée'
-					AND CONCAT(M.marque, ' ', M.type) = '" + modele + "'
-					AND O.code = '" + option + "'
-					AND V.numero NOT IN(
-						SELECT R.vehiculeNumero
-						FROM Reservation R
-						WHERE R.etat = 'Effectif'
-					)
-				GROUP BY M.marque, M.type
-				;
-			</code></pre>
-
-			<h4>Vue Factures</h4>
-
-			<pre class="language-sql line-numbers pre-scrollable"><code>
-				CREATE OR REPLACE VIEW VFacture AS
+				<pre class="language-sql line-numbers pre-scrollable"><code>
 					SELECT
-						Fa.numero AS factureNumero,
-						L.numeroContrat AS numeroContrat,
-						C.id AS clientId,
-						M.montantForfaitaire AS montantBase,
-						CASE
-							WHEN L.paiementCaution = 0 THEN
-								(M.montantForfaitaire / 100) * 3
-							ELSE
-								0
-						END AS fraisPaiementCaution,
-						CASE
-							WHEN Fo.type = 'Journée' AND Rec.dateArrivee > L.dateDepart + INTERVAL 1 DAY THEN
-								(DATEDIFF(Rec.dateArrivee, L.dateDepart) - 1) * T.amendeJournaliere
-							WHEN Fo.type = 'Semaine' AND Rec.dateArrivee > L.dateDepart + INTERVAL 1 WEEK THEN
-								(DATEDIFF(Rec.dateArrivee, L.dateDepart) - 7) * T.amendeJournaliere
-							WHEN Fo.type = 'Week-end' AND Rec.dateArrivee > L.dateDepart + INTERVAL 3 DAY THEN
-								(DATEDIFF(Rec.dateArrivee, L.dateDepart) - 3) * T.amendeJournaliere
-							ELSE
-								0
-						END AS fraisJoursSupps,
-						CASE
-							WHEN Rec.kilometrageArrivee - L.kilometrageDepart > Fo.kilometrageForfaitaire THEN
-								(Rec.kilometrageArrivee - L.kilometrageDepart - Fo.kilometrageForfaitaire) * T.prixKilometre
-							ELSE
-								0
-						END AS fraisKmSupps,
-						CASE
-							WHEN EXISTS (SELECT R.numero FROM Reservation R WHERE R.nouvelleReservationNumero = Res.numero) THEN
-								T.amendeJournaliere
-							ELSE
-								0
-						END AS compensationAnnulation
-					FROM Client C, Facture Fa, Formule Fo, Location L, Montant M, Modele Mo, Reception Rec, Reservation Res, Tarification T, Vehicule V
+						CONCAT(M.marque, ' ', M.type) AS 'Model',
+						COUNT(V.numero) AS 'Total number of cars',
+						O.libelle AS 'Options',
+						CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',
+						CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',
+						CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'
+					FROM Vehicule V
+						LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type
+						LEFT JOIN Options O ON M.optionCode = O.code
+						LEFT JOIN Tarification T On M.tarificationCode = T.code
+						LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code
 					WHERE
-						Fa.locationNumeroContrat = L.numeroContrat AND
-						Rec.locationNumeroContrat = L.numeroContrat AND
-						L.reservationNumero = Res.numero AND
-						Res.formuleType = Fo.type AND
-						Res.vehiculeNumero = V.numero AND
-						Res.clientId = C.id AND
-						M.tarificationCode = T.code AND
-						M.formuleType = Fo.type AND
-						V.modeleMarque = Mo.marque AND
-						V.modeleType = Mo.type AND
-						Mo.tarificationCode = T.code
-				;
-			</code></pre>
+						Mo.formuleType = 'Journée'
+						AND V.numero NOT IN(
+							SELECT R.vehiculeNumero
+							FROM Reservation R
+							WHERE R.etat = 'Effectif'
+						)
+					GROUP BY M.marque, M.type
+					;
+				</code></pre>
 
-			<h4>Factures</h4>
+				<p>
+					Cette requête permet d'avoir une vision du stock actuel de véhicules dans l'entreprise. Dans cette requête je trie les véhicules pour ne garder que ceux dont il n'y a pas réservation effective.
+				</p>
 
-			<pre class="language-sql line-numbers pre-scrollable"><code>
-				SELECT
-					V.factureNumero AS 'Bill Number',
-					CONCAT(C.prenom, ' ', C.nom) AS 'Client',
-					C.adresse AS 'Billing address',
-					V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + V.fraisKmSupps - V.compensationAnnulation AS 'Total',
-					F.etat AS 'State'
-				FROM Client C
-					RIGHT JOIN VFacture V ON V.clientId = C.id
-					LEFT JOIN Facture F ON V.factureNumero = F.numero
-				WHERE C.id = 1
-				ORDER BY V.factureNumero DESC
-				;
-			</code></pre>
+			<h4>Véhicules en location</h4>
 
-			<h4>Fidélité</h4>
+				<pre class="language-sql line-numbers pre-scrollable"><code>
+					SELECT
+						V.numero AS 'Car number',
+						CONCAT(V.modeleMarque, ' ', V.modeleType) AS 'Model',
+						R.numero AS 'Reservation number',
+						CONCAT(C.prenom, ' ', C.nom) AS 'Client',
+						CASE
+							WHEN F.type = 'Journée' THEN
+								R.dateDemandee + INTERVAL 1 DAY
+							WHEN F.type = 'Semaine' THEN
+								R.dateDemandee + INTERVAL 1 WEEK
+							WHEN F.type = 'Week-end' THEN
+								R.dateDemandee + INTERVAL 3 DAY
+						END AS 'Return date'
+					FROM Reservation R
+						LEFT JOIN Vehicule V ON R.vehiculeNumero = V.numero
+						LEFT JOIN Client C ON R.clientId = C.Id
+					WHERE
+						R.etat = 'Effectif'
+						AND EXISTS (
+							SELECT L.numeroContrat
+							FROM Location L
+							WHERE L.reservationNumero = R.numero
+						)
+					;
+				</code></pre>
 
-			<pre class="language-sql line-numbers pre-scrollable"><code>
-				SELECT
-					CONCAT(C.prenom, ' ', C.nom) AS 'Client',
-					COUNT(V.factureNumero) AS 'Number of reservations',
-					SUM(V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + V.fraisKmSupps - V.compensationAnnulation) AS 'Sum'
-				FROM Client C
-					LEFT JOIN VFacture V ON V.clientId = C.id
-				WHERE C.id = 1
-				;
-			</code></pre>
+				<p>
+					Cette requête permet de voir les véhicules qui sont actuellement en location. Dans cette requête, j'utilise une instruction <em>Case</em> afin de trouver la date de retour supposée selon la formule choisie. Je trie aussi les réservations en ne gardant que celles dont une location est liée.
+				</p>
+
+			<h4>Propositions de véhicules</h4>
+
+				<pre class="language-sql line-numbers pre-scrollable"><code>
+					SELECT
+						CONCAT(M.marque, ' ', M.type) AS 'Model',
+						COUNT(V.numero) AS 'Total number of cars',
+						O.libelle AS 'Options',
+						CONCAT(Mo.montantForfaitaire, ' €') AS 'Price for a day',
+						CONCAT(T.prixKilometre, ' €') AS 'Exceded kilometer price',
+						CONCAT(T.amendeJournaliere, ' €') AS 'Exceded day price'
+					FROM Vehicule V
+						LEFT JOIN Modele M ON V.modeleMarque = M.marque AND V.modeleType = M.type
+						LEFT JOIN Options O ON M.optionCode = O.code
+						LEFT JOIN Tarification T On M.tarificationCode = T.code
+						LEFT JOIN Montant Mo ON Mo.tarificationCode = T.code
+					WHERE
+						Mo.formuleType = 'Journée'
+						AND CONCAT(M.marque, ' ', M.type) = 'Audi A3'
+						AND O.code = 'O1'
+						AND V.numero NOT IN(
+							SELECT R.vehiculeNumero
+							FROM Reservation R
+							WHERE R.etat = 'Effectif'
+						)
+					GROUP BY M.marque, M.type
+					;
+				</code></pre>
+
+				<p>
+					Cette requête permet de voir quels véhicules peuvent être proposés au client selon ses choix. Dans cette requête, j'utilise une fonction <em>Count</em> afin de compter le nombre de véhicules correspondants aux critères. Je groupe également les résultats par modèle de voiture au moyen de l'instruction <em>Group by</em>.
+				</p>
+
+			<h4>Factures d'un client</h4>
+
+				<pre class="language-sql line-numbers pre-scrollable"><code>
+					SELECT
+						V.factureNumero AS 'Bill Number',
+						CONCAT(C.prenom, ' ', C.nom) AS 'Client',
+						C.adresse AS 'Billing address',
+						V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + V.fraisKmSupps - V.compensationAnnulation AS 'Total',
+						F.etat AS 'State'
+					FROM Client C
+						RIGHT JOIN VFacture V ON V.clientId = C.id
+						LEFT JOIN Facture F ON V.factureNumero = F.numero
+					WHERE C.id = 1
+					ORDER BY V.factureNumero DESC
+					;
+				</code></pre>
+
+				<p>
+					Cette requête permet de voir l'état de toutes le factures liées à un client. Dans cette requête, j'utilise la vue <em>VFacture</em> afin de faciliter la requête. Cette vue donne la décomposition du calcul du montant total pour chaque facture.
+				</p>
+
+				<h6>Vue Factures</h6>
+
+					<div class="insidecon">
+
+						<pre class="language-sql line-numbers pre-scrollable"><code>
+							CREATE OR REPLACE VIEW VFacture AS
+								SELECT
+									Fa.numero AS factureNumero,
+									L.numeroContrat AS numeroContrat,
+									C.id AS clientId,
+									M.montantForfaitaire AS montantBase,
+									CASE
+										WHEN L.paiementCaution = 0 THEN
+											(M.montantForfaitaire / 100) * 3
+										ELSE
+											0
+									END AS fraisPaiementCaution,
+									CASE
+										WHEN Fo.type = 'Journée' AND Rec.dateArrivee > L.dateDepart + INTERVAL 1 DAY THEN
+											(DATEDIFF(Rec.dateArrivee, L.dateDepart) - 1) * T.amendeJournaliere
+										WHEN Fo.type = 'Semaine' AND Rec.dateArrivee > L.dateDepart + INTERVAL 1 WEEK THEN
+											(DATEDIFF(Rec.dateArrivee, L.dateDepart) - 7) * T.amendeJournaliere
+										WHEN Fo.type = 'Week-end' AND Rec.dateArrivee > L.dateDepart + INTERVAL 3 DAY THEN
+											(DATEDIFF(Rec.dateArrivee, L.dateDepart) - 3) * T.amendeJournaliere
+										ELSE
+											0
+									END AS fraisJoursSupps,
+									CASE
+										WHEN Rec.kilometrageArrivee - L.kilometrageDepart > Fo.kilometrageForfaitaire THEN
+											(Rec.kilometrageArrivee - L.kilometrageDepart - Fo.kilometrageForfaitaire) * T.prixKilometre
+										ELSE
+											0
+									END AS fraisKmSupps,
+									CASE
+										WHEN EXISTS (SELECT R.numero FROM Reservation R WHERE R.nouvelleReservationNumero = Res.numero) THEN
+											T.amendeJournaliere
+										ELSE
+											0
+									END AS compensationAnnulation
+								FROM Client C, Facture Fa, Formule Fo, Location L, Montant M, Modele Mo, Reception Rec, Reservation Res, Tarification T, Vehicule V
+								WHERE
+									Fa.locationNumeroContrat = L.numeroContrat AND
+									Rec.locationNumeroContrat = L.numeroContrat AND
+									L.reservationNumero = Res.numero AND
+									Res.formuleType = Fo.type AND
+									Res.vehiculeNumero = V.numero AND
+									Res.clientId = C.id AND
+									M.tarificationCode = T.code AND
+									M.formuleType = Fo.type AND
+									V.modeleMarque = Mo.marque AND
+									V.modeleType = Mo.type AND
+									Mo.tarificationCode = T.code
+							;
+						</code></pre>
+
+					</div>
+
+			<h4>Fidélité d'un client</h4>
+
+				<pre class="language-sql line-numbers pre-scrollable"><code>
+					SELECT
+						CONCAT(C.prenom, ' ', C.nom) AS 'Client',
+						COUNT(V.factureNumero) AS 'Number of reservations',
+						SUM(V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + V.fraisKmSupps - V.compensationAnnulation) AS 'Sum'
+					FROM Client C
+						LEFT JOIN VFacture V ON V.clientId = C.id
+					WHERE C.id = 1
+					;
+				</code></pre>
+
+				<p>
+					Cette requête permet de voir la fidélité d'un client dans l'entreprise. Dans cette requête, j'utilise également la vue <em>VFacture</em>. De plus, j'utilise les fonction <em>Count</em> et <em>Sum</em> pour avoir respectivement le nombre de réservations et la somme totale dépensée par un client.
+				</p>
 
 		</div>
 
@@ -871,7 +969,27 @@
 			</div>
 
 			<p>
-				Pour conclure, ce projet m'a permis d'appronfondir mes connaissances des bases de données relationnelles. J'ai pu aussi expérimenter la programmation web avec le <em>PHP</em> ou le <em>Node.js</em>. L'application créée a été pensée pour le client et devrait remplir ses attentes.
+				Pour conclure, je dirais que ce projet m'a permis d'approfondir mes connaissances des bases de données relationnelles. J'ai pu aussi expérimenter la programmation web.
+			</p>
+
+			<p>
+				Le système d'information créé pourrait être amélioré de plusieurs façons.
+			</p>
+
+			<p>
+				D'abord, il ne gère pas très bien la sécurité des données de l'entreprise. Les mots de passes sont stockés en clair dans la base de données, certains champs sont sensibles à l'injection <em>SQL</em>…
+			</p>
+
+			<p>
+				Ensuite, il serait intéressant de mieux gérer les privilèges dans le site. Actuellement, l'onglet <em>Management</em> est protégé en vérifiant simplement si l'utilisateur actuel de la session est nommé <em>admin</em>. Il faudrait pouvoir donner des privilèges à certains utilisateurs, leur permettant d'accéder à certaines pages ou non.
+			</p>
+
+			<p>
+				Enfin, certains formulaires sont peu exploités. Pour faciliter les requêtes <em>SQL</em>, je ne récupère que les champs les plus critiques. Également, il faudrait pouvoir montrer quels champs sont obligatoires.
+			</p>
+
+			<p>
+				Malgré ces points-là, ce système d'information a été pensé pour répondre aux besoins du client et devrait pouvoir répondre à ses attentes.
 			</p>
 
 		</div>

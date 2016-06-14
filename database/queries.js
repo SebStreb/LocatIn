@@ -240,8 +240,8 @@ exports.getFact = function (cli, callback) {
 			"V.factureNumero AS 'Bill Number',\n" +
 			"CONCAT(C.prenom, ' ', C.nom) AS 'Client',\n" +
 			"C.adresse AS 'Billing address',\n" +
-			"V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + " +
-			"V.fraisKmSupps - V.compensationAnnulation AS 'Total',\n" +
+			"CONCAT(V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps + " +
+			"V.fraisKmSupps - V.compensationAnnulation, ' €') AS 'Total',\n" +
 			"F.etat AS 'State'\n" +
 		"FROM Client C\n" +
 		"RIGHT JOIN VFacture V ON V.clientId = C.id\n" +
@@ -262,8 +262,8 @@ exports.getFid = function (cli, callback) {
 		"SELECT\n" +
 			"CONCAT(C.prenom, ' ', C.nom) AS 'Client',\n" +
 			"COUNT(V.factureNumero) AS 'Number of reservations',\n" +
-			"SUM(V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps +" +
-			"V.fraisKmSupps - V.compensationAnnulation) AS 'Sum'\n" +
+			"CONCAT(SUM(V.montantBase + V.fraisPaiementCaution + V.fraisJoursSupps +" +
+			"V.fraisKmSupps - V.compensationAnnulation), ' €') AS 'Sum'\n" +
 		"FROM Client C\n" +
 		"LEFT JOIN VFacture V ON V.clientId = C.id\n" +
 		"WHERE C.id = " + cli + "\n"

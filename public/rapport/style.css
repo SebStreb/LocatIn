@@ -4,8 +4,12 @@
 
 p {
 	font-size: 1.5em;
-	padding: 20px 50px;
+	padding: 10px 50px;
 	text-align: justify;
+}
+
+ul.p {
+	padding: 10px 50px;
 }
 
 li.p {
@@ -32,4 +36,8 @@ nav {
 
 .img-rounded {
 	width: 100%;
+}
+
+.insidecon {
+	padding: 0px 50px 20px;
 }

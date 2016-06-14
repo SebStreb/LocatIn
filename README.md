@@ -16,7 +16,7 @@ When everything is installed properly, you may simply launch the server with `$ 
 ## Directory
 - package.json :
 
-This files sets the Node.js packages and the installation and launching scripts.
+This file sets the Node.js packages and the installation and launching scripts.
 
 - install.js :
 
